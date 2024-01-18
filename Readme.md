@@ -67,10 +67,10 @@ npm run app
 
 5. **Visit this Url on your browser**
 
-[http://127.0.0.1:3000](http://127.0.0.1:3000)
+   [http://127.0.0.1:3000](http://127.0.0.1:3000)
 
-5. **To access the admin Panel please visit the following endpoint**
+6. **To access the admin Panel please visit the following endpoint**
 
-[http://127.0.0.1:3000/admin](http://127.0.0.1:3000/admin)
+   [http://127.0.0.1:3000/admin](http://127.0.0.1:3000/admin)
 
-6. **Enjoy the joy of reading and creating awesome blogs**
+7. **Enjoy the joy of reading and creating awesome blogs**
