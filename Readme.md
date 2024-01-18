@@ -49,3 +49,28 @@ Welcome to our dynamic Blog Website, a digital universe where creativity and fun
    git clone https://github.com/parthj000/MYBLOG.git
 
    ```
+
+2. **Download the Node runtime from**
+   [DOWNLOAD](https://nodejs.org/en/download)
+
+3. **Install the dependecies**
+
+```bash
+npm install
+```
+
+4. **Run the app**
+
+```bash
+npm run app
+```
+
+5. **Visit this Url on your browser**
+
+[http://127.0.0.1:3000](http://127.0.0.1:3000)
+
+5. **To access the admin Panel please visit the following endpoint**
+
+[http://127.0.0.1:3000/admin](http://127.0.0.1:3000/admin)
+
+6. **Enjoy the joy of reading and creating awesome blogs**
