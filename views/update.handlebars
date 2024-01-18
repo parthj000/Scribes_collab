@@ -1,0 +1,59 @@
+<div
+    style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; margin-right: 10%;margin-left: 10%; background-color: #ffffff; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+    <form action="/user/create/post" method="post" style="">
+        <div style="padding:50px;">
+            <div style="margin-bottom: 3px;">
+                <textarea name="title" id="newTitle" cols="1" rows="1"
+                    style=" width:100%;padding: 5px; font-size: 40px; 
+                    font-family: 'Georgia', sans-serif;border:none;outline:none;font-weightt:300;">{{this.title}}</textarea>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <textarea name="content" id="newContent" type="input"
+                    style="width:100%; padding: 10px; font-size: 16px; border:none;font-size:20px;font-family: 'Arial', sans-serif;outline:none;"
+                    cols="30" rows="10">{{this.content}}</textarea>
+            </div>
+            <div style="text-align: center;">
+                <input type="button" value="Submit" onclick="userAction()"
+                    style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+            </div>
+
+
+        </div>
+
+    </form>
+</div>
+<script>
+    async function userAction() {
+        const url = window.location.href
+        const action = url.split("/")[4];
+        const slug = url.split("/")[6];
+
+        console.log(action)
+        const newTitle = document.getElementById("newTitle").value;
+        const newContent = document.getElementById("newContent").value;
+        console.log(newContent)
+        const data = {
+            newTitle: newTitle,
+            newContent: newContent,
+            action: action
+        }
+        console.log(data);
+
+
+
+
+        const response = await fetch(`/user/${action}/blog/${slug}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+
+
+        }).then(alert("The blog have been updated"))
+
+
+        console.log(response.json());
+    }
+</script>

@@ -1,0 +1,50 @@
+<div
+  style="max-width: 1200px; padding:50px ; margin: 0 auto; display: grid; grid-gap: 20px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+  <!-- Blog Card 1 -->
+
+  {{#each this.blogs}}
+
+  <div style="background-color: #fff; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+    <h2 style="font-size: 1.5em; margin-bottom: 10px;">{{this.title}}</h2>
+
+    <a href={{concate '/views/blog/' this.slug }}
+      style="color: #007bff; text-decoration: none; display: inline-block;">Read
+      More </a>
+    <a href={{concate '/user/update/blog/' this.slug }} id="update"
+      style="color: #007bff; text-decoration: none; display: inline-block;">Update</a>
+    <div id="delete" onclick="clicko()"
+      style="color: #007bff; text-decoration: none; display: inline-block; cursor:pointer">Delete
+    </div>
+  </div>
+  {{/each}}
+
+
+</div>
+<script>
+  async function clicko() {
+
+
+    const url = document.getElementById("update").href;
+
+
+    var newUrl = url.split("/")
+    const slug = newUrl[6];
+    newurl = "http://127.0.0.1:3000/user/delete/blog/" + slug;
+    const data = {
+      action: "delete"
+    }
+
+    const response = await fetch(newurl, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+    console.log(response)
+    window.location.href = "/user/myaccount";
+
+
+  }
+
+</script>

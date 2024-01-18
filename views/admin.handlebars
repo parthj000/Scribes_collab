@@ -1,0 +1,89 @@
+<header style="text-align: center; background-color: #333; color: #fff; padding: 10px;">
+    <h1>Admin Panel</h1>
+</header>
+
+<nav style="background-color: #007bff; padding: 10px;">
+    <ul style="list-style: none; margin: 0; padding: 0; text-align: center;">
+        <li style="display: inline-block; margin-right: 20px;"><a href="#"
+                style="text-decoration: none; color: #fff;">Dashboard</a></li>
+        <li style="display: inline-block; margin-right: 20px;"><a href="#"
+                style="text-decoration: none; color: #fff;">Users</a></li>
+        <li style="display: inline-block; margin-right: 20px;"><a href="#"
+                style="text-decoration: none; color: #fff;">Settings</a></li>
+    </ul>
+</nav>
+
+<section style="margin-top: 20px;">
+    <h2>Dashboard</h2>
+    <p>Welcome to the Admin Panel. Here, you can manage various aspects of your website.</p>
+
+    <div style="margin-top: 20px; padding: 10px; background-color: #fff; border: 1px solid #ddd;">
+        <h2 style="cursor:pointer;">Choose blogs</h2>
+
+        <div style="max-width: 1200px; padding:50px ; margin: 0 auto; ">
+
+
+            {{#each this.blogs}}
+
+
+            <div
+                style="background-color: #fff; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+
+                <h2 style="font-size: 1.5em; margin-bottom: 10px;"><input type="checkbox" style="cursor:pointer;"
+                        class="check">{{this.title}}</h2>
+
+                <a href={{concate '/views/blog/' this.slug }}
+                    style="color: #007bff; text-decoration: none; display: inline-block;">Read
+                    More </a>
+
+            </div>
+            {{/each}}
+            <button onclick="clicko()">Confirm editor choice list
+
+
+
+        </div>
+        <script>
+
+            async function clicko() {
+
+                try {
+                    const blogs = document.querySelectorAll(".check:checked");
+                    var blogSlugs = [];
+                    for (let key of blogs) {
+                        const blog = key.parentElement.parentElement;
+                        const link = blog.querySelector("a");
+
+                        const hash = link.href.split("/");
+                        blogSlugs.push(hash.pop());
+
+
+
+                    }
+                    console.log(blogSlugs)
+
+
+                    const data = {
+                        blogs: blogSlugs,
+                    }
+
+
+
+
+                    const resp = await fetch("/admin/options", {
+                        method: "POST",
+                        headers: {
+                            "Content-type": "application/json"
+                        },
+                        body: JSON.stringify(data)
+                    })
+                    return console.log(resp.json());
+
+                }
+                catch (err) {
+                    console.log(err)
+                }
+
+
+            }
+        </script>

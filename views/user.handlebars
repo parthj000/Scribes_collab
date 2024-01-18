@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Dashboard</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0;">
+  <div style="width: 80%; margin: 20px auto; padding: 20px; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+    <h1>User Dashboard</h1>
+    
+    <!-- Display Posts -->
+    <div style="border: 1px solid #ccc; border-radius: 5px; margin-bottom: 10px; padding: 10px;">
+      <h2 style="margin-top: 0;">Sample Post 1</h2>
+      <p>This is a sample post content.</p>
+    </div>
+    <!-- Add more posts dynamically here -->
+    
+    <!-- Form to Write HTML Content -->
+    <div style="margin-top: 20px;">
+      <h2>Create a Post</h2>
+      <form id="postForm">
+        <textarea style="width: calc(100% - 22px); height: 100px; margin-bottom: 10px; padding: 5px; border: 1px solid #ccc; border-radius: 5px; resize: vertical;"></textarea>
+        <input type="submit" value="Create Post" style="padding: 8px 20px; background-color: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer;">
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('postForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const postContent = document.querySelector('#postForm textarea').value;
+
+      const newPost = document.createElement('div');
+      newPost.style.border = '1px solid #ccc';
+      newPost.style.borderRadius = '5px';
+      newPost.style.marginBottom = '10px';
+      newPost.style.padding = '10px';
+
+      const newHeading = document.createElement('h2');
+      newHeading.style.marginTop = '0';
+      newHeading.textContent = 'New Post';
+
+      const newParagraph = document.createElement('p');
+      newParagraph.textContent = postContent;
+
+      newPost.appendChild(newHeading);
+      newPost.appendChild(newParagraph);
+
+      document.body.appendChild(newPost);
+    });
+  </script>
+</body>
+</html>
