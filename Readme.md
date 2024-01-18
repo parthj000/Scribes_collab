@@ -15,15 +15,14 @@ Welcome to our dynamic Blog Website, a digital universe where creativity and fun
    - 🚀 Enjoy full CRUD capabilities, empowering a personalized blogging experience.
 
 2. **Passive Users:**
-   - 🌐 Register and log in with ease.
    - 📖 Limited to exploring and savoring a vast array of captivating blogs.
-   - 🔒 No need to worry about create, update, or delete permissions.
+   - 🔒 Not access to update or deleting a post,but can read your favourite blog.
 
 ### Database Management
 
 - **Database:** MongoDB 🍃
 - **User Data:**
-  - 🔐 Safely stored with state-of-the-art security measures.
+  - 🔐 Safely stored 
   - 🔒 Passwords hashed to ensure the utmost protection.
 
 ### Admin Panel
