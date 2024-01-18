@@ -1,4 +1,4 @@
-# 🚀 Awesome Blog Website
+# 🚀 MYBLOG.com
 
 ## Introduction
 
@@ -10,19 +10,21 @@ Welcome to our dynamic Blog Website, a digital universe where creativity and fun
 
 1. **Active Users:**
 
-   - 🌐 Register and log in.
+   - 🌐 Registered and logged in.
    - ✏️ Create, read, update, and delete their blogs effortlessly.
    - 🚀 Enjoy full CRUD capabilities, empowering a personalized blogging experience.
 
 2. **Passive Users:**
+   - 🌐 Not Registered and logged in.
    - 📖 Limited to exploring and savoring a vast array of captivating blogs.
-   - 🔒 Not access to update or deleting a post,but can read your favourite blog.
+   - 🔒 Not access to update or deleting a post,but will be able to read your favourite blog.
 
 ### Database Management
 
 - **Database:** MongoDB 🍃
 - **User Data:**
-  - 🔐 Safely stored 
+  - 🔐 Authentication using JWT.
+  - 🔐 Decentrallized Data
   - 🔒 Passwords hashed to ensure the utmost protection.
 
 ### Admin Panel
@@ -34,7 +36,16 @@ Welcome to our dynamic Blog Website, a digital universe where creativity and fun
 ## Setup Instructions
 
 1. **Clone the Repository:**
+
    ```bash
-   git clone [repository_url]
-   cd [repository_directory]
+   mkdir MYBLOG
+   ```
+
+   ```bash
+   cd MYBLOG
+   ```
+
+   ```bash
+   git clone https://github.com/parthj000/MYBLOG.git
+
    ```
