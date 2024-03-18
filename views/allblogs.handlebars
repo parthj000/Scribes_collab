@@ -5,14 +5,15 @@
 
     <div class="card">
         <div class="thumbnail">
-            <img id="thumbnail" src={{this.blogPhoto}} alt="">
+            <img loading="lazy" id="thumbnail" src={{this.blogPhoto}} alt="">
         </div>
 
 
         <div class="card-content">
             <div class="author">
-                <img src={{this.authorPhoto}}>
-                <span>author{{this.author}}</span>
+                <img loading="lazy" src={{this.authorPhoto}}>
+                <span>{{this.author}}</span>
+                <span>{{this.date}}</span>
             </div>
 
             <div class="header blog-heading">
@@ -21,10 +22,8 @@
 
 
 
-            <div class="card-description">
-                {{this.slug}}
 
-            </div>
+
 
             <div class="card-footer">
                 <a href={{concate '/views/blog/' this.slug }}
@@ -32,9 +31,9 @@
                     More </a>
 
 
-                <img src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/like.png" alt="">
-                <img src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/del.png" alt="">
-                <img src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/edit.png" alt="">
+                <img src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/like.png" class="like"
+                    onclick="uno()" alt="">
+
 
             </div>
 
@@ -56,13 +55,13 @@
         {{#each this.editorChoiceBlogs}}
         <div class="card">
             <div class="thumbnail">
-                <img id="thumbnail" src={{this.blogPhoto}} alt="">
+                <img loading="lazy" id="thumbnail" src={{this.blogPhoto}} alt="">
             </div>
 
 
             <div class="card-content">
                 <div class="author">
-                    <img src={{this.authorPhoto}}>
+                    <img loading="lazy" src={{this.authorPhoto}}>
                     <span>author{{this.author}}</span>
                 </div>
 
@@ -72,10 +71,7 @@
 
 
 
-                <div class="card-description">
-                    {{this.slug}}
 
-                </div>
 
                 <div class="card-footer">
                     <a href={{concate '/views/blog/' this.slug }}
@@ -83,9 +79,9 @@
                         More </a>
 
 
-                    <img src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/like.png" alt="">
-                    <img src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/del.png" alt="">
-                    <img src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/edit.png" alt="">
+                    <img src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/like.png" class="like"
+                        alt="">
+
 
                 </div>
 
@@ -99,3 +95,22 @@
 
     </div>
 </div>
+
+<script>
+
+
+    function uno() {
+
+        const elm = event.target;
+        const arr = elm.src.split("/").pop();
+        console.log(arr);
+        if (arr == "like.png") {
+            elm.src = "/files/static/app/raw/kapa65568/server/kpo576455zz545/images/like2.png";
+            return
+        }
+        elm.src = "/files/static/app/raw/kapa65568/server/kpo576455zz545/images/like.png";
+
+
+
+    }
+</script>

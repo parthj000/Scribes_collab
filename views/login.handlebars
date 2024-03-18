@@ -1,24 +1,24 @@
+<div
+  style="max-width: 400px; color:black; margin: 20px auto; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); background-color: #000000; margin-bottom:5rem; margin-top:5rem;">
+
+  <form action="/auth" method="post" style="display: flex; background-color:black; flex-direction: column;">
+
+    <input name="name" required="true" type="text"
+      style="padding: 10px; background-color:black; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc; transition: border-color 0.3s ease-in-out;"
+      placeholder="Your Name">
+
+    <input name="password" required="true" type="password"
+      style="padding: 10px; background-color:black; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc; transition: border-color 0.3s ease-in-out;"
+      placeholder="Your Password">
 
 
-
-<div style="max-width: 400px; margin: 20px auto; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); background-color: #f9f9f9;">
-
-  <form action="/auth" method="post" style="display: flex; flex-direction: column;">
-
-    <input name="name"required="true"  type="text" style="padding: 10px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc; transition: border-color 0.3s ease-in-out;" placeholder="Your Name">
-
-    <input name="password"required="true"  type="password" style="padding: 10px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc; transition: border-color 0.3s ease-in-out;" placeholder="Your Email">
-
-    
 
     <input class="a" type="submit" value="Submit" required="true" style="background-color: #3498db; color: #fff; border: none; padding: 10px; border-radius: 4px; cursor: pointer; transition: background-color 0.3s ease-in-out;
      ">
-  
-    
+
+
   </form>
-  
+
   <p>if you haven't registered please<a href="/register" style="color:blue">Register here</a></p>
-    <p style="color:red">{{this.errMessage}}</p>
+  <p style="color:red">{{this.errMessage}}</p>
 </div>
-
-
