@@ -1,5 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
+import streamifier from "streamifier";
 
 cloudinary.config({
   cloud_name: "dalll4udd",
@@ -7,23 +8,45 @@ cloudinary.config({
   api_secret: "SxzWhnHTmC2HFoHIIAGgYOsWUkk",
 });
 
-const cloudUpload = async (localFilePath) => {
-  try {
-    if (localFilePath) {
-      const result = await cloudinary.uploader.upload(localFilePath, {
-        resource_type: "auto",
-      });
-      fs.unlinkSync(localFilePath);
-      console.log("asynchro operation is complete");
+let cloudUpload = (req) => {
+  return new Promise((resolve, reject) => {
+    let cld_upload_stream = cloudinary.uploader.upload_stream(
+      {
+        folder: "foo",
+      },
+      (error, result) => {
+        if (result) {
+          resolve(result);
+        } else {
+          reject(error);
+        }
+      }
+    );
 
-      console.log("uploaded", result);
-      console.log("=======================");
-      console.log(result.url);
-      return result.url;
-    }
-  } catch (err) {
-    console.log(err);
-    fs.unlinkSync(localFilePath);
-  }
+    streamifier.createReadStream(req.file.buffer).pipe(cld_upload_stream);
+  });
 };
+
+// let result = await cloudUpload(req);
+// console.log(result);
+
+// const cloudUpload = async (req) => {
+//   {
+//     try {
+//       let response = await cloudinary.uploader.upload(function (error, result) {
+//         console.log(error, result);
+
+//         return result;
+//       });
+
+//       streamifier.createReadStream(req.file.buffer).pipe(response);
+//       console.log(
+//         response,
+//         "-00000000090-9-=========================-----------"
+//       );
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   }
+// };
 export { cloudUpload };

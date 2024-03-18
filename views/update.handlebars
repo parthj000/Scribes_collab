@@ -1,21 +1,21 @@
 <div
-    style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; margin-right: 10%;margin-left: 10%; background-color: #ffffff; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+    style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color:rgb(56, 55, 55)  margin: 20px; margin-right: 10%;margin-left: 10%;  border-radius: 8px; box-shadow: 0 0 10px rgba(43, 43, 43, 0.1);">
     <form action="/user/create/post" method="post" style="">
         <div style="padding:50px;">
-            <div style="margin-bottom: 3px;">
+            <div style="margin-bottom: 3px; ">
                 <textarea name="title" id="newTitle" cols="1" rows="1"
-                    style=" width:100%;padding: 5px; font-size: 40px; 
-                    font-family: 'Georgia', sans-serif;border:none;outline:none;font-weightt:300;">{{this.title}}</textarea>
+                    style=" width:100%;background-color:rgb(56, 55, 55);padding: 5px; font-size: 40px; 
+                    font-family: 'Georgia', sans-serif;border:none;outline:none;font-weight:300;">{{this.title}}</textarea>
             </div>
 
             <div style="margin-bottom: 20px;">
                 <textarea name="content" id="newContent" type="input"
-                    style="width:100%; padding: 10px; font-size: 16px; border:none;font-size:20px;font-family: 'Arial', sans-serif;outline:none;"
+                    style="width:100%; background:rgb(56, 55, 55); padding: 10px; font-size: 16px; border:none;font-size:20px;font-family: 'Arial', sans-serif;outline:none;"
                     cols="30" rows="10">{{this.content}}</textarea>
             </div>
             <div style="text-align: center;">
                 <input type="button" value="Submit" onclick="userAction()"
-                    style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                    style="padding: 10px 20px; background:rgb(56, 55, 55); background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
             </div>
 
 
@@ -51,7 +51,7 @@
             body: JSON.stringify(data)
 
 
-        }).then(alert("The blog have been updated"))
+        }).then(alert("The blog have been updated")).then(window.location.href = "/")
 
 
         console.log(response.json());

@@ -1,4 +1,5 @@
 import express from "express";
+import { findUser } from "../data/fetchUserData.js";
 import { register } from "../data/mongoose.js";
 import { checkCookie } from "../data/checkCookie.js";
 import { editBlog, userAction } from "../data/update.js";
@@ -241,23 +242,24 @@ router.post("/admin/options", async (req, res) => {
 });
 
 //endpoint to upload a files;
-router.post("/upload", uploads.single("file"), (req, res) => {
+router.post("/upload", uploads.single("file"), async (req, res) => {
   try {
-    const ori = req.file.originalname;
+    const k = await cloudUpload(req);
+    const url = k.secure_url;
 
-    const url = cloudUpload("./uploads/" + req.file.filename);
     fetchLinks(req, url);
   } catch (err) {
     res.render("error");
   }
 
-  return res.redirect("/");
+  return res.redirect("/user/myaccount");
 });
 router.post("/uploads/blogs", uploads.single("file"), async (req, res) => {
   try {
-    const ori = req.file.originalname;
-
-    const url = await cloudUpload("./uploads/" + req.file.filename);
+    const k = await cloudUpload(req);
+    const url = k.secure_url;
+    console.log(k, url);
+    console.log(await cloudUpload(req));
     const urlEncode = btoa(url);
     res.cookie("add", urlEncode);
     res.cookie("uploaded", "yes");
@@ -266,8 +268,12 @@ router.post("/uploads/blogs", uploads.single("file"), async (req, res) => {
     res.render("error");
   }
 });
-router.get("/userData", (req, res) => {
-  res.send("hii");
+
+router.get("/info", checkCookie, decodeToken, async (req, res) => {
+  console.log(req.decodedData.sessId);
+  const sessid = req.decodedData.sessId;
+  console.log(await findUser(sessid));
+  res.json(await findUser(sessid));
 });
 
 export { router };

@@ -4,21 +4,24 @@
     <div id="whenresponsive" onclick="animateSlider()">&rarr;</div>
     <div class="unresponsive">
       <div class="photo">
-        <img id="tochange" src="http://res.cloudinary.com/dalll4udd/image/upload/v1710588884/ipoktcuzeh7iq9eitau6.png"
-          alt="">
+        <img loading="eager" id="tochange"
+          src="http://res.cloudinary.com/dalll4udd/image/upload/v1710588884/ipoktcuzeh7iq9eitau6.png" alt="">
         <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data"
           style="text-align: center; margin-top:1rem;">
           <label for="fileInput"
-            style="cursor: pointer; padding: 10px 20px; background-color: #007bff; color: #fff; border-radius: 5px; border: none; display: inline-block; margin-bottom: 10px;">Choose
-            File</label>
+            style="cursor: pointer; padding: 10px 20px; background-color: #007bff; color: #fff; border-radius: 5px; border: none; display: inline-block; margin-bottom: 10px;">Change
+            Pic</label>
           <input type="file" id="fileInput" name="file" style="display: none;">
           <button type="submit"
             style="padding: 10px 20px; background-color: #007bff; color: #fff; border-radius: 5px; border: none; display: none;">Submit</button>
         </form>
 
       </div>
+
       <div>
-        <span id="author-name">Change Your Profile</span>
+        <span id="absolutename"></span>
+
+
       </div>
     </div>
 
@@ -28,6 +31,8 @@
 
 
   <div class="con">
+    <div id="empty" style="  opacity:0.6; display:none; "><img style=" max-width:100%; place-self:center;"
+        src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/empty.png" alt=""></div>
     <div class="grid-container-2">
       <!-- Blog Card 1 -->
 
@@ -35,14 +40,15 @@
 
       <div class="card">
         <div class="thumbnail">
-          <img src={{this.blogPhoto}} alt="">
+          <img loading="lazy" src={{this.blogPhoto}} alt="">
         </div>
 
 
         <div class="card-content">
           <div class="author">
-            <img id="authorPhoto" src={{this.authorPhoto}} alt="">
+            <img loading="lazy" id="authorPhoto" src={{this.authorPhoto}} alt="">
             <span>{{this.author}}</span>
+            <span>{{this.date}}</span>
           </div>
 
           <div class="header blog-heading">
@@ -51,20 +57,18 @@
 
 
 
-          <div class="card-description">
-            {{this.slug}}
 
-          </div>
 
-          <div class="card-footer">
+          <div class="card-footer" id={{this.slug}}>
             <a href={{concate '/views/blog/' this.slug }}
               style="color: #007bff; text-decoration: none; display: inline-block;">Read
               More </a>
 
 
-            <img src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/like.png" alt="">
+            <img src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/like.png" onclick="uno()" alt="">
             <img onclick="clicko()" src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/del.png" alt="">
-            <a href="{{concate '/user/update/blog/' this.slug }}" class="update">Update</a>
+            <a href="{{concate '/user/update/blog/' this.slug }}" hidden class="update">Update</a>
+            <img onclick="updato()" src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/edit.png" alt="">
 
           </div>
 
@@ -80,7 +84,19 @@
     </div>
   </div>
 </div>
+
 <script>
+
+  function updato() {
+
+    const elem = event.target;
+    const parent = elem.parentNode.id;
+    const link = "/user/update/blog/" + parent;
+    window.location.href = link;
+
+
+  }
+
 
 
   var x = window.matchMedia("(max-width: 700px)")
@@ -159,17 +175,7 @@
 
 
 
-  function changeSrc() {
 
-
-    let b = document.getElementById("authorPhoto").src;
-    document.getElementById("tochange").src = b;
-
-
-
-  }
-
-  changeSrc();
 
   document.getElementById('fileInput').addEventListener('change', function () {
     const fileInput = this;
@@ -191,18 +197,44 @@
 
 
     });
+    window.location.href = "/user/create";
 
 
 
   });
 
 
+  function uno() {
+
+    const elm = event.target;
+    const arr = elm.src.split("/").pop();
+    console.log(arr);
+    if (arr == "like.png") {
+      elm.src = "/files/static/app/raw/kapa65568/server/kpo576455zz545/images/like2.png";
+      return
+    }
+    elm.src = "/files/static/app/raw/kapa65568/server/kpo576455zz545/images/like.png";
 
 
 
+  }
 
+  async function common() {
+    try {
+      const res = await fetch("/info");
+      const data = await res.json();
+      if (data.svg == true) {
+        document.querySelector("#empty").style.display = "grid";
+      }
+      document.getElementById("tochange").src = data.photo;
+      document.getElementById("absolutename").innerText = "USER: " + data.name;
+    }
+    catch (err) {
+      console.log("00");
+    }
 
-
+  }
+  common();
 
 
 
