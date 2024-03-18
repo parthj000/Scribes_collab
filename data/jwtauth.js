@@ -1,12 +1,11 @@
 import jwt from "jsonwebtoken";
 
-import { SECRETKEY } from "./privatekeys.js";
 async function jwtauth(req, res, next) {
   try {
     const Cookie = req.cookies;
     if (Cookie.AuthToken == null)
       throw new Error("Something Went wrong , please login again");
-    const result = await jwt.verify(Cookie.AuthToken, SECRETKEY);
+    const result = await jwt.verify(Cookie.AuthToken, process.env.SECRETKEY);
     console.log("---------------------jwt checkpoint cleared");
     next();
   } catch (error) {

@@ -1,0 +1,119 @@
+:root{
+  --dark-color:rgb(61, 58, 58);
+  --dark-2:rgb(50, 47, 47);
+
+}
+.container-nav{
+    
+    
+    background-color:var(--dark-color);
+    padding:1rem 3rem 1rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 0 15px rgba(0,0,0,0.6);
+    position:sticky;
+    z-index: 2;
+
+   
+    
+}
+.container-nav ul {
+
+    display: flex;
+    gap:1rem;
+    justify-content: space-around;
+    align-items: center;
+}
+.container-nav ul li{
+    margin-right:1rem;
+    padding:0.5rem;
+    transition: 0.4s all ease-in;
+    border-radius: 5px;
+
+}
+
+
+
+.logo{
+    font-size: 2rem;
+    color:white;
+    font-weight: bold;
+}
+.logo span{
+    color:red;
+}
+.nav-menu{
+    display:none;
+}
+.nav-menu img{
+    height:1.25rem;
+}
+
+
+.logout{
+  background-color:rgb(73, 73, 73);
+  border:none;
+  
+  
+  padding:0.5rem;
+  border-radius:0.5em;
+  color:white;
+  cursor:pointer;
+}
+#responsive-menu{
+  display:none;
+  text-align:center;
+  background-color: var(--dark-color);
+  margin-top:-1px;
+  padding-top:0.25rem;
+  margin-bottom:1rem;
+}
+#responsive-menu ul li {
+  padding-bottom: 1rem;
+  color:white;
+  cursor:pointer;
+  
+}
+
+
+
+
+
+/*
+responsive layout css
+
+*/
+
+
+@media screen and (max-width: 850px) {
+  .container-nav .nav-list{
+    display:none;
+
+  }
+  .logo{
+    font-size: 1.5rem;
+    margin-right:1rem;
+  }
+  .nav-menu{
+    display: flex;
+    cursor: pointer;
+    
+  }
+  .nav-menu:active{
+    background-color: red;
+  }
+
+  
+ 
+
+  
+
+
+
+
+}
+
+
+
+

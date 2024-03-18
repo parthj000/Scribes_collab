@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
-import { SECRETKEY } from "./privatekeys.js";
+
 import { userMetaDataBase } from "./schemas.js";
 import crypto from "crypto";
 

@@ -1,12 +1,12 @@
 import jwt from "jsonwebtoken";
-import { SECRETKEY } from "./privatekeys.js";
+
 async function checkCookie(req, res, next) {
   try {
     const cookie = req.cookies.AuthToken;
     // console.log(cookie);
 
     if (cookie != null) {
-      const result = await jwt.verify(cookie, SECRETKEY);
+      const result = await jwt.verify(cookie, process.env.SECRETKEY);
 
       if (result) {
         req.renderCode = 1;

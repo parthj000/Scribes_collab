@@ -1,6 +1,9 @@
 import express from "express";
 import cockieParser from "cookie-parser";
 import pkg from "express-handlebars";
+import path from "path";
+import "dotenv/config";
+
 import { connectDB } from "../data/mongoose.js";
 
 import { router } from "../routes/routes.js";
@@ -16,7 +19,14 @@ const filePath = fileURLToPath(direcName);
 const app = express();
 
 connectDB();
+
+app.use(
+  "/files/static/app/raw/kapa65568/server/kpo576455zz545",
+  express.static(path.resolve("./views/static"))
+);
+
 app.use(cookieParser());
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.text());
 app.use(express.json());

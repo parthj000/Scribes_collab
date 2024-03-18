@@ -6,7 +6,8 @@ import { admin } from "../data/admin.js";
 import { authenticate } from "../data/mongoose.js";
 import { genToken } from "../data/authoriz.js";
 import { blogDatabase, adminChoice } from "../data/schemas.js";
-
+import { cloudUpload } from "../data/cloudinary.js";
+import { fetchLinks } from "../data/fetchLinks.js";
 import {
   findBlog,
   decodeToken,
@@ -14,6 +15,7 @@ import {
   coockieCorec,
 } from "../data/blogs.js";
 import { addBlog } from "../data/newBlogs.js";
+import { uploads } from "../data/multer.js";
 
 const router = express.Router();
 
@@ -23,14 +25,6 @@ router.get("/", checkCookie, (req, res) => {
       layout: "active",
     });
   return res.render("home");
-});
-
-router.get("/about", checkCookie, (req, res) => {
-  if (req.renderCode == 1)
-    return res.render("about", {
-      layout: "active",
-    });
-  return res.render("about");
 });
 
 router.get("/register", checkCookie, (req, res) => {
@@ -98,15 +92,23 @@ router.get("/views/blog/:slug", checkCookie, async (req, res) => {
       layout: "active",
       title: blog[0].title,
       content: blog[0].content,
+      author: blog[0].author,
+      authorPhoto: blog[0].authorPhoto,
+      date: blog[0].date,
+      blogPhoto: blog[0].blogPhoto,
     });
   }
   if (blog.length == 0) {
-    return res.render("error", {});
+    return res.render("error");
   }
 
   return res.render("blog", {
     title: blog[0].title,
     content: blog[0].content,
+    author: blog[0].author,
+    authorPhoto: blog[0].authorPhoto,
+    date: blog[0].date,
+    blogPhoto: blog[0].blogPhoto,
   });
 });
 router.get(
@@ -135,8 +137,9 @@ router.get(
 
     if (req.renderCode == 1) {
       console.log("----------------------------------------", req.message);
+
       console.log(req.newblogs);
-      console.log("hh");
+
       return res.render("userblogs", {
         layout: "active",
         blogs: req.newblogs,
@@ -149,18 +152,23 @@ router.get(
   }
 );
 router.get("/user/update/blog/:slug", checkCookie, editBlog, (req, res) => {
-  if (req.renderCode == 1) {
-    console.log("----------------------------------------", req.message);
-    return res.render("update", {
+  try {
+    if (req.renderCode == 1) {
+      console.log("----------------------------------------", req.message);
+      return res.render("update", {
+        layout: "active",
+        title: req.title,
+        content: req.content,
+      });
+    }
+    return res.render("error", {
       layout: "active",
-      title: req.title,
-      content: req.content,
     });
+  } catch (err) {
+    return res.render("error");
   }
 
   console.log("-----------------------------", req.message);
-
-  return res.render("error");
 });
 router.post("/user/update/blog/:slug", userAction, (req, res) => {
   res.json({
@@ -193,13 +201,12 @@ router.post(
 router.get("/user/create", checkCookie, (req, res) => {
   if (req.renderCode == 1) {
     console.log("----------------------------------------", req.message);
+
     return res.render("create", {
       layout: "active",
     });
   }
   console.log("-----------------------------", req.message);
-
-  return res.render("error");
 });
 router.post(
   "/user/create/post",
@@ -209,6 +216,7 @@ router.post(
   (req, res) => {
     if (req.renderCode == 1) {
       console.log("----------------------------------------", req.message);
+      res.clearCookie("uploaded");
       return res.render("home", {
         layout: "active",
       });
@@ -230,6 +238,36 @@ router.post("/admin/options", async (req, res) => {
   res.json({
     saved: "yes",
   });
+});
+
+//endpoint to upload a files;
+router.post("/upload", uploads.single("file"), (req, res) => {
+  try {
+    const ori = req.file.originalname;
+
+    const url = cloudUpload("./uploads/" + req.file.filename);
+    fetchLinks(req, url);
+  } catch (err) {
+    res.render("error");
+  }
+
+  return res.redirect("/");
+});
+router.post("/uploads/blogs", uploads.single("file"), async (req, res) => {
+  try {
+    const ori = req.file.originalname;
+
+    const url = await cloudUpload("./uploads/" + req.file.filename);
+    const urlEncode = btoa(url);
+    res.cookie("add", urlEncode);
+    res.cookie("uploaded", "yes");
+    res.redirect("/user/create");
+  } catch (err) {
+    res.render("error");
+  }
+});
+router.get("/userData", (req, res) => {
+  res.send("hii");
 });
 
 export { router };

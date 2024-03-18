@@ -22,6 +22,7 @@ async function findBlog(req, res, next) {
     editorsChoiceBlogs.push(findi[0]);
   }
   console.log(editorsChoiceBlogs, "--------------------------------ed");
+
   req.editorsChoices = editorsChoiceBlogs;
 
   next();
