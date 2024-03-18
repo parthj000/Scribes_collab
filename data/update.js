@@ -46,14 +46,13 @@ async function userAction(req, res, next) {
         "blog id ---------------------------update succesful"
       );
     } else if (req.body.action == "delete") {
+      console.log("hoio");
       const id = blog.Id;
 
       var user = await userMetaDataBase.find({
         sessId: req.decodedData.sessId,
       });
       user = user[0];
-
-      console.log(user);
 
       const blogs = user.blogsId;
       const newblogId = [];
@@ -62,16 +61,18 @@ async function userAction(req, res, next) {
           newblogId.push(blogs[i]);
         }
       }
-      console.log(newblogId);
+
       user.blogsId = newblogId;
       user.save();
 
-      const dl = await blogDatabase.deleteOne({ slug: slug });
+      await blogDatabase.deleteOne({ Id: id });
 
-      return res.render("home", {
-        layout: "active",
-      });
+      res.redirect("/user/myaccount");
     } else if (req.body.action == "logout") {
+      //clearr all cookies of domain
+      for (let key in req.cookies) {
+        res.clearCookie(key);
+      }
       res.clearCookie("AuthToken");
       const random = crypto.randomBytes(4).toString("hex");
       var newsessId = req.decodedData.sessId;

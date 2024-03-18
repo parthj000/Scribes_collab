@@ -1,34 +1,141 @@
-<div
-  style="max-width: 1200px; padding:50px ; margin: 0 auto; display: grid; grid-gap: 20px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
-  <!-- Blog Card 1 -->
+<div class="mega-container">
 
-  {{#each this.blogs}}
+  <div class="profile-card">
+    <div id="whenresponsive" onclick="animateSlider()">&rarr;</div>
+    <div class="unresponsive">
+      <div class="photo">
+        <img id="tochange" src="http://res.cloudinary.com/dalll4udd/image/upload/v1710588884/ipoktcuzeh7iq9eitau6.png"
+          alt="">
+        <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data"
+          style="text-align: center; margin-top:1rem;">
+          <label for="fileInput"
+            style="cursor: pointer; padding: 10px 20px; background-color: #007bff; color: #fff; border-radius: 5px; border: none; display: inline-block; margin-bottom: 10px;">Choose
+            File</label>
+          <input type="file" id="fileInput" name="file" style="display: none;">
+          <button type="submit"
+            style="padding: 10px 20px; background-color: #007bff; color: #fff; border-radius: 5px; border: none; display: none;">Submit</button>
+        </form>
 
-  <div style="background-color: #fff; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-    <h2 style="font-size: 1.5em; margin-bottom: 10px;">{{this.title}}</h2>
+      </div>
+      <div>
+        <span id="author-name">Change Your Profile</span>
+      </div>
+    </div>
 
-    <a href={{concate '/views/blog/' this.slug }}
-      style="color: #007bff; text-decoration: none; display: inline-block;">Read
-      More </a>
-    <a href={{concate '/user/update/blog/' this.slug }} id="update"
-      style="color: #007bff; text-decoration: none; display: inline-block;">Update</a>
-    <div id="delete" onclick="clicko()"
-      style="color: #007bff; text-decoration: none; display: inline-block; cursor:pointer">Delete
+  </div>
+
+
+
+
+  <div class="con">
+    <div class="grid-container-2">
+      <!-- Blog Card 1 -->
+
+      {{#each this.blogs}}
+
+      <div class="card">
+        <div class="thumbnail">
+          <img src={{this.blogPhoto}} alt="">
+        </div>
+
+
+        <div class="card-content">
+          <div class="author">
+            <img id="authorPhoto" src={{this.authorPhoto}} alt="">
+            <span>{{this.author}}</span>
+          </div>
+
+          <div class="header blog-heading">
+            {{this.title}}
+          </div>
+
+
+
+          <div class="card-description">
+            {{this.slug}}
+
+          </div>
+
+          <div class="card-footer">
+            <a href={{concate '/views/blog/' this.slug }}
+              style="color: #007bff; text-decoration: none; display: inline-block;">Read
+              More </a>
+
+
+            <img src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/like.png" alt="">
+            <img onclick="clicko()" src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/del.png" alt="">
+            <a href="{{concate '/user/update/blog/' this.slug }}" class="update">Update</a>
+
+          </div>
+
+        </div>
+
+      </div>
+      {{/each}}
+
+
+
+
+
     </div>
   </div>
-  {{/each}}
-
-
 </div>
 <script>
+
+
+  var x = window.matchMedia("(max-width: 700px)")
+  x.addEventListener("change", function () {
+    document.querySelector(".profile-card").style.width = "10rem";
+    document.querySelector(".unresponsive").style.display = "block";
+    document.querySelector(".profile-card").style.animation = "slider 2s";
+    document.querySelector(".profile-card").style.width = "10rem";
+
+
+
+  });
+
+  function animateSlider() {
+
+
+    const card = document.querySelector(".unresponsive");
+    const procard = document.querySelector(".profile-card");
+    if (card.style.display != "block") {
+      card.style.display = "block";
+
+
+      procard.style.animation = "slider 2s";
+
+      procard.style.width = "10rem";
+      procard.style.position = "relative";
+      procard.style.zIndex = "5";
+      return;
+
+
+
+    }
+    procard.style.width = "2rem";
+
+    card.style.display = "none";
+
+    return;
+  }
+
+
   async function clicko() {
 
 
-    const url = document.getElementById("update").href;
+
+    const targetElement = event.target;
+    const parent = targetElement.parentNode;
+    const children = parent.children;
+    const url = children[0].href;
+    console.log(url, targetElement, parent, children[0]);
+
 
 
     var newUrl = url.split("/")
-    const slug = newUrl[6];
+    const slug = newUrl.pop();
+    console.log(slug);
     newurl = "/user/delete/blog/" + slug;
     const data = {
       action: "delete"
@@ -41,10 +148,62 @@
       },
       body: JSON.stringify(data)
     })
+
+
     console.log(response)
     window.location.href = "/user/myaccount";
 
 
+
   }
+
+
+
+  function changeSrc() {
+
+
+    let b = document.getElementById("authorPhoto").src;
+    document.getElementById("tochange").src = b;
+
+
+
+  }
+
+  changeSrc();
+
+  document.getElementById('fileInput').addEventListener('change', function () {
+    const fileInput = this;
+    const submitButton = document.querySelector('button[type="submit"]');
+
+    if (fileInput.files.length > 0) {
+      submitButton.style.display = 'inline-block';
+    } else {
+      submitButton.style.display = 'none';
+    }
+  });
+
+  document.getElementById('uploadForm').addEventListener('submit', function (event) {
+    // Prevent default form submission behavior
+    // Here you can add further validation or submission logic if needed
+    document.getElementById('fileInput').addEventListener('change', function () {
+      const fileInput = this;
+      const submitButton = document.querySelector('button[type="submit"]');
+
+
+    });
+
+
+
+  });
+
+
+
+
+
+
+
+
+
+
 
 </script>

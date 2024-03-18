@@ -5,55 +5,113 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Blog</title>
+  <link id="link1" rel="stylesheet" href="/files/static/app/raw/kapa65568/server/kpo576455zz545/main.css">
+  <link id="link2" rel="stylesheet" href="/files/static/app/raw/kapa65568/server/kpo576455zz545/nav.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+    rel="stylesheet">
 </head>
 
-<body
-  style="font-family: Arial, sans-serif; line-height: 1.6; background-color: #f5f5f5; color: #333; margin: 0; padding: 0;">
+<body>
 
-  <header class="header" style="background-color: #007bff; color: #fff; padding: 15px 0;">
-    <div class="container" style="width: 80%; margin: 0 auto; max-width: 1200px;">
-      <h1 class="logo" style="font-size: 1.8em; margin: 0;">My Blog</h1>
-      <nav class="nav">
-        <ul class="nav-list" style="list-style: none; padding: 0;">
-          <li style="display: inline; margin-right: 20px;"><a href="/"
-              style="text-decoration: none; color: #fff;">Home</a></li>
-          <li style="display: inline; margin-right: 20px;"><a href="/about"
-              style="text-decoration: none; color: #fff;">About</a></li>
-          <li style="display: inline; margin-right: 20px;"><a href="/blog"
-              style="text-decoration: none; color: #fff;">Blog</a></li>
+  <div class=" container-nav">
+    <div class="logo">My<span>blogs</span>.com</div>
 
-          <li style="display: inline;margin-right: 20px;"><a href="/user/myaccount"
-              style="text-decoration: none; color: #fff;"> My Account</a></li>
-          <div style="display: inline;background-color:rgba(255, 255, 255, 0.2);padding:5px; opacity:0.8;">
-            <li style="display: inline; ">
-              <a style="text-decoration: none; color: #fff; cursor:pointer" onclick="logout()"> Logout</a>
-            </li>
-          </div>
-          <div
-            style="display: inline;background-color:rgba(255, 255, 255, 0.2);padding:5px; margin:300px ;opacity:0.8;">
-            <li style="display: inline; "><a href="/user/create" style="text-decoration: none; color: #fff;"> +
-                Create</a></li>
-          </div>
-        </ul>
-      </nav>
+
+    <ul class="nav-list" style="list-style: none; padding: 0;">
+
+      <li><a href="/" style="text-decoration: none; color: #fff;">Home</a>
+      </li>
+
+      <li><a href="/blog" style="text-decoration: none; color: #fff;">Blog</a></li>
+      <li><a href="/user/myaccount" style="text-decoration: none; color: #fff;">MyAccount</a></li>
+      <li><button class="logout" onclick="logout()">Logout</button></li>
+      <li><button class="logout" onclick="create()">Create</button></li>
+
+
+
+
+    </ul>
+    <div class="nav-menu" id="nav-menu" onclick="responsive()">
+      <img class="" src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/menu.png" alt="">
+
     </div>
-  </header>
+
+
+
+
+
+  </div>
+  <div id="responsive-menu">
+    <ul class="responsive-menu">
+      <li><a href="/" style="text-decoration: none; color: #fff;">Home</a>
+      </li>
+
+      <li><a href="/blog" style="text-decoration: none; color: #fff;">Blog</a></li>
+      <li><a href="/user/myaccount" style="text-decoration: none; color: #fff;">MyAccount</a></li>
+      <li><button class="logout" onclick="logout()">Logout</button></li>
+      <li><button class="logout" onclick="create()">Create</button></li>
+
+
+    </ul>
+  </div>
+
 
   {{{body}}}
-  <footer class="footer" style="background-color: #007bff; color: #fff; text-align: center; padding: 15px 0;">
-    <div class="container" style="width: 80%; margin: 0 auto; max-width: 1200px;">
-      <p style="margin: 0;">&copy; 2023 My Blog. All Rights Reserved.</p>
-    </div>
-  </footer>
+  <footer>
+    <div class="main-footer">
 
+      <div class="main-footer-box">
+        <ul>
+          <li>contact-info</li>
+          <li>parsjoshi2@gmail.com</li>
+        </ul>
+      </div>
+      <div class="main-footer-box">
+        <ul>
+          <li>
+            <a href="#" class="fa fa-facebook"></a>
+
+          </li>
+          <li>
+            <a href="#" class="fa fa-twitter"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </footer>
 
 </body>
 <script>
+
+  //responsive menu handling 
+
+
+  function responsive() {
+
+    const elem = document.getElementById("responsive-menu");
+
+    if (elem.style.display == "block") {
+      elem.style.display = "none";
+      return
+    }
+
+    elem.style.display = "block";
+  }
+
+  var x = window.matchMedia("(max-width: 850px)")
+  x.addEventListener("change", function () {
+    document.getElementById("responsive-menu").style.display = "none";
+  });
+
+
+
+
   async function logout() {
-
-
-
-
     const data = {
       action: "logout"
     }
@@ -72,6 +130,13 @@
 
 
   }
+
+  function create() {
+    window.location.href = "/user/create";
+  }
+
+
+
 </script>
 
 </html>

@@ -1,37 +1,101 @@
-<div
-    style="max-width: 1200px; padding:50px ; margin: 0 auto; display: grid; grid-gap: 20px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+<div class="container">
     <!-- Blog Card 1 -->
 
     {{#each this.blogs}}
 
-    <div style="background-color: #fff; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-        <h2 style="font-size: 1.5em; margin-bottom: 10px;">{{this.title}}</h2>
-        <p style="margin-bottom: 15px;">{{this.description}}</p>
-        <a href={{concate '/views/blog/' this.slug }}
-            style="color: #007bff; text-decoration: none; display: inline-block;">Read
-            More </a>
+    <div class="card">
+        <div class="thumbnail">
+            <img id="thumbnail" src={{this.blogPhoto}} alt="">
+        </div>
+
+
+        <div class="card-content">
+            <div class="author">
+                <img src={{this.authorPhoto}}>
+                <span>author{{this.author}}</span>
+            </div>
+
+            <div class="header blog-heading">
+                {{this.title}}
+            </div>
+
+
+
+            <div class="card-description">
+                {{this.slug}}
+
+            </div>
+
+            <div class="card-footer">
+                <a href={{concate '/views/blog/' this.slug }}
+                    style="color: #007bff; text-decoration: none; display: inline-block;">Read
+                    More </a>
+
+
+                <img src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/like.png" alt="">
+                <img src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/del.png" alt="">
+                <img src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/edit.png" alt="">
+
+            </div>
+
+        </div>
 
     </div>
+
+
     {{/each}}
 
 
 </div>
-<h1 style="padding:20px"> EditorsChoice:</h1>
-<div
-    style="max-width: 1200px; padding:50px ; margin: 0 auto; display: grid; grid-gap: 20px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+<div id="editor-choice">
+    <h1 style="padding:20px"> EditorsChoice:</h1>
+    <div
+        style="max-width: 1200px; padding:50px ; margin: 0 auto; display: grid; grid-gap: 20px; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));">
 
 
-    {{#each this.editorChoiceBlogs}}
+        {{#each this.editorChoiceBlogs}}
+        <div class="card">
+            <div class="thumbnail">
+                <img id="thumbnail" src={{this.blogPhoto}} alt="">
+            </div>
 
-    <div style="background-color: #fff; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-        <h2 style="font-size: 1.5em; margin-bottom: 10px;">{{this.title}}</h2>
-        <p style="margin-bottom: 15px;">{{this.description}}</p>
-        <a href={{concate '/views/blog/' this.slug }}
-            style="color: #007bff; text-decoration: none; display: inline-block;">Read
-            More </a>
+
+            <div class="card-content">
+                <div class="author">
+                    <img src={{this.authorPhoto}}>
+                    <span>author{{this.author}}</span>
+                </div>
+
+                <div class="header blog-heading">
+                    {{this.title}}
+                </div>
+
+
+
+                <div class="card-description">
+                    {{this.slug}}
+
+                </div>
+
+                <div class="card-footer">
+                    <a href={{concate '/views/blog/' this.slug }}
+                        style="color: #007bff; text-decoration: none; display: inline-block;">Read
+                        More </a>
+
+
+                    <img src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/like.png" alt="">
+                    <img src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/del.png" alt="">
+                    <img src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/edit.png" alt="">
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        {{/each}}
+
 
     </div>
-    {{/each}}
-
-
 </div>

@@ -11,8 +11,14 @@ const userSchema = mongoose.Schema({
 
 const mainDataSchema = mongoose.Schema({
   name: String,
+  profilePhoto: {
+    default:
+      "http://res.cloudinary.com/dalll4udd/image/upload/v1710588884/ipoktcuzeh7iq9eitau6.png",
+    type: String,
+  },
   blogsId: {
     type: [String],
+    default: [],
   },
   sessId: {
     type: String,
@@ -24,6 +30,18 @@ const mainDataSchema = mongoose.Schema({
 
 const blogListSchema = mongoose.Schema({
   title: String,
+  blogPhoto: {
+    default:
+      "https://res.cloudinary.com/dalll4udd/image/upload/v1710532412/emj6pzwq6sawanrgcvdt.png",
+    type: String,
+  },
+  author: String,
+  authorPhoto: {
+    type: String,
+    default:
+      "http://res.cloudinary.com/dalll4udd/image/upload/v1710588884/ipoktcuzeh7iq9eitau6.png",
+  },
+  date: String,
   content: String,
   slug: String,
   Id: String,

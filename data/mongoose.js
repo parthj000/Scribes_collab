@@ -5,10 +5,10 @@ import { hashedPassword, compare } from "./hashFun.js";
 import { genToken } from "./authoriz.js";
 import crypto from "crypto";
 
-const dBURL = "mongodb://127.0.0.1:27017";
+const dBURL = process.env.DBURL;
 
 import { basicRegisterModel, userMetaDataBase } from "./schemas.js";
-import { SECRETKEY } from "./privatekeys.js";
+
 const random = crypto.randomBytes(4).toString("hex");
 
 async function register(req, res, next) {
@@ -65,7 +65,7 @@ async function authenticate(req, res, next) {
           sessId: user[0].sessId,
         };
 
-        const AuthToken = await jwt.sign(arr, SECRETKEY);
+        const AuthToken = await jwt.sign(arr, process.env.SECRETKEY);
 
         res.cookie("AuthToken", AuthToken);
         return next();

@@ -1,8 +1,18 @@
-<main style="padding:50px ">
-  <div class="post" style="margin-bottom: 30px;  ">
-    <div style="margin-top: 0; font-size:40px; font-family: 'Georgia', sans-serif;font-weight:350;"> {{this.title}}
+<main style="display:flex; justify-content:center; background-color:rgb(54, 52, 52);  padding:2rem 1rem 2rem 1rem;">
+  <div class="post" style=" max-width:40rem; ">
+    <div style="font-size:2.4rem; font-weight:bolder;"> {{this.title}}
     </div>
-    <pre style=" font-size:18px; font-family: 'Arial', sans; white-space:pre-wrap;"> {{this.content}} </pre>
+    <div class="card-content nell">
+      <div class="author">
+        <img src={{this.authorPhoto}} alt="">
+        <span>{{this.author}}</span>
+        <span>{{this.date}}</span>
+      </div>
+    </div>
+    <img src={{this.blogPhoto}} style=" width:100%; height:20rem; object-fit:cover; object-position:center;
+        margin-top:2rem; margin-bottom:2rem; " alt="">
+    <pre style=" font-size:1rem; white-space:pre-wrap;"> {{this.content}} </pre>
+
   </div>
 
 
