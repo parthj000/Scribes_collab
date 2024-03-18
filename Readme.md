@@ -1,4 +1,5 @@
 # 🚀 MYBLOG.com
+The website is live at [https://myblog-0d3h.onrender.com](https://myblog-0d3h.onrender.com)
 
 ## Introduction
 
@@ -69,8 +70,8 @@ npm run app
 
    [http://127.0.0.1:3000](http://127.0.0.1:3000)
 
-6. **To access the admin Panel please visit the following endpoint**
+7. **To access the admin Panel please visit the following endpoint**
 
    [http://127.0.0.1:3000/admin](http://127.0.0.1:3000/admin)
 
-7. **Enjoy the joy of reading and creating awesome blogs**
+8. **Enjoy the joy of reading and creating awesome blogs**
