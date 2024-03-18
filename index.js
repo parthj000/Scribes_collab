@@ -4,14 +4,14 @@ import pkg from "express-handlebars";
 import path from "path";
 import "dotenv/config";
 
-import { connectDB } from "../data/mongoose.js";
+import { connectDB } from "./data/mongoose.js";
 
-import { router } from "../routes/routes.js";
+import { router } from "./routes/routes.js";
 
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import cookieParser from "cookie-parser";
-import { jwtauth } from "../data/jwtauth.js";
+import { jwtauth } from "./data/jwtauth.js";
 
 const direcName = dirname(import.meta.url);
 const filePath = fileURLToPath(direcName);
