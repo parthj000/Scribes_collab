@@ -6,9 +6,22 @@ import { editBlog, userAction } from "../data/update.js";
 import { admin } from "../data/admin.js";
 import { authenticate } from "../data/mongoose.js";
 import { genToken } from "../data/authoriz.js";
-import { blogDatabase, adminChoice } from "../data/schemas.js";
+import { showBookmarks } from "../data/bookmark.js";
+import { sendGmail } from "../data/sendMail.js";
+import { v4 as uuidv4 } from "uuid";
+import path from "path";
+
+import {
+  blogDatabase,
+  adminChoice,
+  userMetaDataBase,
+} from "../data/schemas.js";
 import { cloudUpload } from "../data/cloudinary.js";
 import { fetchLinks } from "../data/fetchLinks.js";
+import { commentinfo } from "../data/comment.js";
+import { generalUser } from "../data/generalUser.js";
+import { findGeneralBlog } from "../data/generalUser.js";
+import { bookmark } from "../data/bookmark.js";
 import {
   findBlog,
   decodeToken,
@@ -65,18 +78,6 @@ router.post("/auth", authenticate, (req, res) => {
   });
 });
 router.get("/views/blog/:slug", checkCookie, async (req, res) => {
-  // for (let obj of blogList) {
-  //   for (let key in obj) {
-  //     if (key == "slug" && obj[key] == req.params.slug) {
-  //       res.render("blog", {
-  //         content: obj.content,
-  //         title: obj.title,
-  //       });
-  //     }
-  //   }
-  // }
-  //
-
   var slug = req.params.slug;
 
   const blog = await blogDatabase.find({ slug: slug });
@@ -88,7 +89,8 @@ router.get("/views/blog/:slug", checkCookie, async (req, res) => {
         layout: "active",
       });
     }
-
+    console.log(blog[0].title);
+    console.log(blog[0].comments);
     return res.render("blog", {
       layout: "active",
       title: blog[0].title,
@@ -97,6 +99,7 @@ router.get("/views/blog/:slug", checkCookie, async (req, res) => {
       authorPhoto: blog[0].authorPhoto,
       date: blog[0].date,
       blogPhoto: blog[0].blogPhoto,
+      comments: blog[0].comments,
     });
   }
   if (blog.length == 0) {
@@ -110,6 +113,7 @@ router.get("/views/blog/:slug", checkCookie, async (req, res) => {
     authorPhoto: blog[0].authorPhoto,
     date: blog[0].date,
     blogPhoto: blog[0].blogPhoto,
+    comments: blog[0].comments,
   });
 });
 router.get(
@@ -118,24 +122,6 @@ router.get(
   decodeToken,
   userBlogs,
   (req, res) => {
-    // authenticate using cookies and jwt authenticate
-    // a dashboard containing all posts and to create post
-    // logout option delete cookies
-    // //addition me photo vagera lagana profile me
-    // or bhi bahut kuch
-    // var cr = [];
-    // blogList.filter((elem) => {
-    //   for (let key of people.parth.id) {
-    //     if (elem.id == key) {
-    //       cr.push(elem);
-    //     }
-    //   }
-    //   return cr;
-    // });
-    // res.render("myaccount", {
-    //   blog: cr,
-    // });
-
     if (req.renderCode == 1) {
       console.log("----------------------------------------", req.message);
 
@@ -270,10 +256,95 @@ router.post("/uploads/blogs", uploads.single("file"), async (req, res) => {
 });
 
 router.get("/info", checkCookie, decodeToken, async (req, res) => {
-  console.log(req.decodedData.sessId);
+  if (req.renderCode != 1) {
+    return res.json({
+      name: "Anonymous",
+      photo:
+        "https://res.cloudinary.com/dalll4udd/image/upload/v1710588884/ipoktcuzeh7iq9eitau6.png",
+    });
+  }
   const sessid = req.decodedData.sessId;
   console.log(await findUser(sessid));
   res.json(await findUser(sessid));
+});
+
+router.post("/comment", (req, res) => {
+  commentinfo(req, res);
+
+  console.log(req.body);
+  res.send("hiii");
+});
+
+router.get("/view/user/:slug", generalUser, (req, res) => {
+  const blogsId = req.user.blogsId;
+
+  console.log(req.user);
+  res.render("generalUser", {
+    layout: "main",
+    name: req.user.name,
+    profilePhoto: req.user.profilePhoto,
+  });
+});
+
+// router.post("/follow", checkCookie, (req, res) => {
+//   if (req.renderCode != 1) {
+//     return res.render("error");
+//   }
+//   followPerson();
+// });
+router.post("/bookmark", checkCookie, decodeToken, (req, res) => {
+  if (req.renderCode != 1) {
+    return res.render("error");
+  }
+  bookmark(req, res);
+
+  res.json({
+    this: "nief",
+  });
+});
+
+router.get("/show/bookmark", checkCookie, decodeToken, async (req, res) => {
+  if (req.renderCode != 1) {
+    return res.render("error");
+  }
+  const blogs = await showBookmarks(req, res);
+  console.log(blogs, "this is the blogs");
+
+  res.render("allblogs", {
+    layout: "active",
+    blogs: blogs,
+  });
+});
+
+router.get("/co", checkCookie, (req, res) => {
+  if (req.renderCode != 1) {
+    return res.render("error");
+  }
+
+  res.render("collaborate");
+});
+
+router.post("/room", checkCookie, decodeToken, (req, res) => {
+  if (req.renderCode != 1) {
+    return res.render("error");
+  }
+
+  const gmail = req.body.gmail;
+  console.log(gmail);
+  var url = uuidv4();
+
+  const newurl = `http://localhost:3000/room/` + url;
+
+  sendGmail(gmail, newurl);
+  console.log(newurl);
+
+  return res.json({ status: "success", url: newurl });
+});
+
+router.get("/room/:roomid", (req, res) => {
+  const uuid = req.params.roomid;
+
+  res.sendFile(path.resolve("views/static/coll.html"));
 });
 
 export { router };

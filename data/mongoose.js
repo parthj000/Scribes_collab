@@ -46,7 +46,7 @@ async function connectDB() {
   try {
     await mongoose.connect(dBURL);
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
   console.log("connected to database succesfully");
 }

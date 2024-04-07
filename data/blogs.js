@@ -29,16 +29,20 @@ async function findBlog(req, res, next) {
 }
 
 async function decodeToken(req, res, next) {
-  if (req.followup == false) return next();
-  const AuthToken = req.cookies.AuthToken;
-  const data = AuthToken.split(".");
-  const buffer = Buffer.from(data[1], "base64");
-  const decodeString = buffer.toString("utf8");
-  const decodedData = JSON.parse(decodeString);
-  req.decodedData = decodedData;
+  try {
+    if (req.followup == false) return next();
+    const AuthToken = req.cookies.AuthToken;
+    const data = AuthToken.split(".");
+    const buffer = Buffer.from(data[1], "base64");
+    const decodeString = buffer.toString("utf8");
+    const decodedData = JSON.parse(decodeString);
+    req.decodedData = decodedData;
 
-  console.log("decoded data------->", decodedData);
-  next();
+    console.log("decoded data------->", decodedData);
+    next();
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 async function userBlogs(req, res, next) {

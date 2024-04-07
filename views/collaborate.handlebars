@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Entry</title>
+    <style>
+        body {
+            background-image: url('/files/static/app/raw/kapa65568/server/kpo576455zz545/images/bg.avif');
+
+            /* Your background image URL */
+            background-size: cover;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            text-align: center;
+            background-color: transparent;
+        }
+
+        .box {
+            background-color: rgba(240, 240, 240, 0.8);
+            /* Semi-transparent background */
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            border: 2px solid #8B4513;
+            /* Brown color border */
+            float: left;
+            transition: transform 0.3s ease-in-out;
+            /* Smooth transition */
+        }
+
+        .box:hover {
+            transform: scale(1.05);
+            /* Hover animation */
+        }
+
+        input[type="text"],
+        input[type="email"],
+        button {
+            padding: 10px 24px;
+            margin: 5px;
+            border-radius: 10px;
+            border: none;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="box">
+            <h2>Enter Room ID</h2>
+
+            <button id="join" onclick="click()"
+                style="background-color: #4CAF50; color: white; cursor: pointer;">Join</button><br>
+
+        </div>
+        <div id="collaboratorsSection" class="box">
+            <h2>Add Collaborators</h2>
+            <input type="email" style="color:black;" id="one" placeholder="Enter Gmail ID"><br>
+            <input type="email" style="color:black;" id="two" placeholder="Enter Gmail ID"><br>
+            <input type="email" style="color:black;" id="three" placeholder="Enter Gmail ID"><br>
+            <button onclick="makeReq()">Submit</button>
+        </div>
+    </div>
+
+    <script>
+        var url;
+        function toggleCollaborators() {
+            var collaboratorsSection = document.getElementById('collaboratorsSection');
+            if (collaboratorsSection.style.display === 'none') {
+                collaboratorsSection.style.display = 'block';
+            } else {
+                collaboratorsSection.style.display = 'none';
+            }
+        }
+
+        async function makeReq() {
+            console.log("happening");
+            const arr = [
+                document.getElementById("one").value,
+                document.getElementById("two").value,
+                document.getElementById("three").value
+            ]
+
+            const postData = {
+                gmail: arr
+            };
+
+            const resp = await fetch("/room", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(postData)
+            });
+
+            url = await resp.json().url;
+
+
+
+
+
+        }
+        function click() {
+            if (url) {
+                return window.location.href = url
+            }
+            window.location.href = "/";
+
+
+        }
+    </script>
+</body>
+
+</html>

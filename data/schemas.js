@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 const userSchema = mongoose.Schema({
   name: String,
   password: {
@@ -20,14 +21,29 @@ const mainDataSchema = mongoose.Schema({
     type: [String],
     default: [],
   },
+  followers: [Object],
+  following: [Object],
+  bookmark: [String],
   sessId: {
     type: String,
     required: true,
     default: " ",
   },
+  baseUrl: {
+    type: String,
+  },
   permission: Boolean,
 });
-
+const newSch = mongoose.Schema({
+  content: {
+    default: "",
+    type: String,
+  },
+  User: {
+    default: "",
+    type: String,
+  },
+});
 const blogListSchema = mongoose.Schema({
   title: String,
   blogPhoto: {
@@ -44,6 +60,10 @@ const blogListSchema = mongoose.Schema({
   date: String,
   content: String,
   slug: String,
+  comments: {
+    default: [],
+    type: [Object],
+  },
   Id: String,
 });
 

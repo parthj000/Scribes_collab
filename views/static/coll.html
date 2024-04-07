@@ -1,0 +1,152 @@
+<html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Old Western Style Quill Editor</title>
+      <!-- Include Quill library -->
+      <link
+        href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
+        rel="stylesheet"
+      />
+    </head>
+    <body
+      style="
+        background-color: #c3bcb2;
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 20px;
+      "
+    >
+      <!-- Create a container for Quill editor -->
+      <div
+        id="editor"
+        style="
+          height: 500px;
+          background-color: #f5f0e6;
+          border: 2px solid black;
+          padding: 20px;
+          border-radius: 10px;
+        "
+      >
+        <p
+          style="
+            color: #684832;
+            text-align: center;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+          "
+        >
+          Let's Collaborate
+        </p>
+      </div>
+
+      <!-- Include Quill library -->
+      <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+      <!-- Include Socket.io library -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.js"></script>
+      <!-- Include client-side JavaScript -->
+      <script>
+        // Initialize socket connection
+        const socket = io("http://localhost:5500");
+
+        // Initialize Quill editor
+        let quill = new Quill("#editor", {
+          modules: {
+            toolbar: [
+              ["bold", "italic", "underline", "strike"],
+              [{ list: "ordered" }, { list: "bullet" }],
+              [{ script: "sub" }, { script: "super" }],
+              [{ indent: "-1" }, { indent: "+1" }],
+              ["link", "image", "video"],
+              ["clean"],
+            ],
+          },
+          theme: "snow",
+          placeholder: "Compose an epic...",
+        });
+
+        // Define a function to submit data to the server
+        function submitDataToServer() {
+          // Data to be submitted
+          const data = {
+            key1: "value1",
+            key2: "value2",
+            // Add more key-value pairs as needed
+          };
+
+          // Send POST request to server
+          fetch("/endpoint", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Network response was not ok");
+              }
+              return response.json();
+            })
+            .then((data) => {
+              console.log("Data submitted successfully:", data);
+              // Optionally, do something after successful submission
+            })
+            .catch((error) => {
+              console.error("Error submitting data:", error);
+            });
+        }
+
+        // Create a button element
+        const button = document.createElement("button");
+        button.textContent = "Submit Data";
+        button.addEventListener("click", submitDataToServer);
+
+        // Append the button to the document body or any other element you desire
+        document.body.appendChild(button);
+
+        let timer = null;
+
+        // Listen for changes in the editor content
+        quill.on("text-change", (delta, oldDelta, source) => {
+          if (source === "user") {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+              // Get the current editor content
+              let content = quill.root.innerHTML;
+
+              // Emit the updated content to the server
+              socket.emit("editor-changes", content);
+            }, 1000); // 1 second delay
+          }
+        });
+
+        // Listen for changes received from the server and update the editor content
+        socket.on("editor-changes", (content) => {
+          // Update the editor content only if it's different from the received content
+          if (quill.root.innerHTML !== content) {
+            // Disable Quill change events temporarily
+            quill.off("text-change");
+
+            // Set the editor content
+            quill.root.innerHTML = content;
+
+            // Re-enable Quill change events after a short delay
+            setTimeout(() => {
+              quill.on("text-change", (delta, oldDelta, source) => {
+                if (source === "user") {
+                  clearTimeout(timer);
+                  timer = setTimeout(() => {
+                    let newContent = quill.root.innerHTML;
+                    socket.emit("editor-changes", newContent);
+                  }, 1000); // 1 second delay
+                }
+              });
+            }, 100);
+          }
+        });
+      </script>
+    </body>
+  </html>
+</html>

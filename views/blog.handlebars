@@ -1,21 +1,170 @@
 <main style="display:flex; justify-content:center; background-color:rgb(54, 52, 52);  padding:2rem 1rem 2rem 1rem;">
   <div class="post" style=" max-width:40rem; ">
-    <div style="font-size:2.4rem; font-weight:bolder;"> {{this.title}}
+    <div id="blog-title-sc" style="font-size:2.4rem; font-weight:bolder;"> {{this.title}}
     </div>
     <div class="card-content nell">
       <div class="author">
-        <img src={{this.authorPhoto}} alt="">
-        <span>{{this.author}}</span>
+        <img id="author-photo-sc" src={{this.authorPhoto}} alt="">
+        <span id="author-name-sc">{{this.author}}</span>
         <span>{{this.date}}</span>
+        <button>follow</button>
+        <button onclick="bookmark()">bookmark</button>
       </div>
     </div>
     <img src={{this.blogPhoto}} style=" width:100%; height:20rem; object-fit:cover; object-position:center;
         margin-top:2rem; margin-bottom:2rem; " alt="">
     <pre style=" font-size:1rem; white-space:pre-wrap;"> {{this.content}} </pre>
 
+
+    {{#each this.comments}}
+    <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; display: flex; align-items: center;">
+      <!-- Author Photo -->
+      <img src={{this.photo}} alt="Author Photo"
+        style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;">
+
+      <!-- Author Name and Comment Content -->
+      <div>
+        <!-- Author Name -->
+        <div style="font-weight: bold; margin-bottom: 5px;">{{this.author}}</div>
+
+        <!-- Comment Content -->
+        <div style="margin-bottom: 5px;">{{this.comment}}</div>
+
+        <!-- Date -->
+        <div style="font-size: 0.8em; color: #666;">April 6, 2024</div>
+      </div>
+    </div>
+
+
+    {{/each}}
+    <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; color:black;">
+      <h3 style="margin-bottom: 10px;">Leave a Comment</h3>
+
+      <!-- Comment Form -->
+
+
+      <!-- Comment Field -->
+      <div style="margin-bottom: 10px;">
+        <label for="comment" style="font-weight: bold;">Comment:</label><br>
+        <textarea id="comment" name="comment" rows="4"
+          style="width: 100%; padding: 5px;  background-color:rgb(66, 63, 63);"></textarea>
+      </div>
+
+      <!-- Submit Button -->
+      <button onclick="comment()"
+        style="background-color: #007bff; color: #fff; border: none; padding: 8px 16px; cursor: pointer;">Submit</button>
+
+    </div>
   </div>
 
 
 
 
+
 </main>
+
+{{!-- function to add css --}}
+
+<script>
+  function CSSAddingFunction(param) {
+    const parent = document.querySelector("head");
+    const newLink = document.createElement("link");
+    let kapa = "/files/static/app/raw/kapa65568/server/kpo576455zz545/"
+    newLink.href = (kapa + param);
+    newLink.rel = "stylesheet";
+    parent.appendChild(newLink);
+    console.log(newLink, "---------thiis is the new link 00");
+    console.log(parent);
+  }
+  CSSAddingFunction("chapa.css");
+
+  var photo;
+  var name;
+  async function comment() {
+    try {
+      const date = new Date();
+      console.log(date);
+      const url = window.location.href;
+      let data = {
+        title: document.getElementById("blog-title-sc").innerText,
+        author: document.getElementById("author-name-sc").innerText,
+        commentAuthor: author,
+        comment: document.getElementById("comment").value,
+        photo: photo
+      }
+      console.log(data);
+      await fetch("/comment", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json"
+        },
+        body: JSON.stringify(data)
+
+      })
+
+    }
+    catch (err) {
+      console.log(err);
+    }
+
+  }
+
+
+  async function common() {
+    try {
+      const res = await fetch("/info");
+      const data = await res.json();
+      console.log(data);
+      author = data.name;
+      photo = data.photo;
+      console.log(author);
+
+    }
+    catch (err) {
+      author = "Anonymous",
+        photo = ""
+      console.log(err);
+    }
+  }
+  common();
+
+
+
+
+  async function follow() {
+    let postData = {
+      title: document.getElementById("blog-title-sc").innerText,
+      author: document.getElementById("author-name-sc").innerText,
+    }
+    await fetch("/follow", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(postData)
+    })
+  }
+
+
+  async function bookmark() {
+
+    let postData = {
+      title: document.getElementById("blog-title-sc").innerText,
+      author: document.getElementById("author-name-sc").innerText,
+    }
+    const resp = await fetch("/bookmark", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(postData),
+    })
+    const data = await resp;
+
+    console.log(await data.json());
+
+
+  }
+
+
+</script>
