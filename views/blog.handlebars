@@ -7,13 +7,16 @@
         <img id="author-photo-sc" src={{this.authorPhoto}} alt="">
         <span id="author-name-sc">{{this.author}}</span>
         <span>{{this.date}}</span>
-        <button>follow</button>
-        <button onclick="bookmark()">bookmark</button>
+
+        <button onclick="bookmark()"
+          style="color: white !important; background-color:transparent; border-color:rgb(255, 255, 255)!important; padding:5px; border-radius:5%;">bookmark</button>
       </div>
     </div>
     <img src={{this.blogPhoto}} style=" width:100%; height:20rem; object-fit:cover; object-position:center;
         margin-top:2rem; margin-bottom:2rem; " alt="">
-    <pre style=" font-size:1rem; white-space:pre-wrap;"> {{this.content}} </pre>
+
+    <div id="hem" style="margin-bottom:10rem;"></div>
+    <div style=" font-size:1rem; white-space:pre-wrap; margin-bottom:6rem;" id="koi"> {{this.content}} </div>
 
 
     {{#each this.comments}}
@@ -28,16 +31,16 @@
         <div style="font-weight: bold; margin-bottom: 5px;">{{this.author}}</div>
 
         <!-- Comment Content -->
-        <div style="margin-bottom: 5px;">{{this.comment}}</div>
+        <div style="margin-bottom: 5px; ">{{this.comment}}</div>
 
         <!-- Date -->
-        <div style="font-size: 0.8em; color: #666;">April 6, 2024</div>
+        <div style="font-size: 0.8em; color: #666;">May 01, 2024</div>
       </div>
     </div>
 
 
     {{/each}}
-    <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; color:black;">
+    <div style="border: 1px solid #ccc; padding: 10px; margin-bottom:5rem  !important; color:black;">
       <h3 style="margin-bottom: 10px;">Leave a Comment</h3>
 
       <!-- Comment Form -->
@@ -66,6 +69,10 @@
 {{!-- function to add css --}}
 
 <script>
+
+
+
+
   function CSSAddingFunction(param) {
     const parent = document.querySelector("head");
     const newLink = document.createElement("link");
@@ -165,6 +172,11 @@
 
 
   }
+
+  document.getElementById("hem").innerHTML = document.getElementById("koi").innerText;
+  document.getElementById("koi").style.display = "none";
+
+
 
 
 </script>

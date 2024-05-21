@@ -3,7 +3,7 @@
     <head>
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Old Western Style Quill Editor</title>
+      <title>Scribes</title>
       <!-- Include Quill library -->
       <link
         href="https://cdn.quilljs.com/1.3.6/quill.snow.css"
@@ -18,7 +18,102 @@
         padding: 20px;
       "
     >
+      <img
+        id="blogPhoto"
+        src=""
+        alt=""
+        style="
+          width: 100%;
+          height: 20rem;
+          object-fit: cover;
+          object-position: center;
+          border: none;
+        "
+      />
+      <form
+        id="uploadForm"
+        action="/uploads/blogs"
+        method="post"
+        enctype="multipart/form-data"
+        style="
+          text-align: center;
+
+          padding-top: 1rem;
+          margin-top: -5px;
+        "
+      >
+        <label
+          for="fileInput"
+          style="
+            cursor: pointer;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            border: none;
+            display: inline-block;
+            margin-bottom: 10px;
+          "
+          >Choose File</label
+        >
+        <input type="file" id="fileInput" name="file" style="display: none" />
+        <button
+          type="submit"
+          style="
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            border: none;
+            display: none;
+          "
+        >
+          Submit
+        </button>
+      </form>
       <!-- Create a container for Quill editor -->
+      <div style="margin-bottom: 20px">
+        <div style="margin-bottom: 3px">
+          <input
+            type="text"
+            name="title"
+            id="blog-title"
+            required
+            placeholder="Title"
+            style="
+              width: 100%;
+              padding: 5px;
+              font-size: 4rem;
+              font-family: 'Georgia', sans-serif;
+              border: none;
+              outline: none;
+              font-weight: 300;
+              background-color: inherit;
+            "
+          />
+        </div>
+      </div>
+
+      <div style="margin-bottom: 10px">
+        <input
+          type="text"
+          name="slug"
+          id="slug"
+          required
+          placeholder="please choose description wisely this will help your story to reach as far as possible."
+          style="
+            background-color: inherit;
+            width: 100%;
+            padding: 10px;
+            font-size: 13px;
+            font-family: 'Arial', sans-serif;
+            border: none;
+            outline: none;
+            font-style: italic;
+          "
+        />
+      </div>
+
       <div
         id="editor"
         style="
@@ -32,13 +127,16 @@
         <p
           style="
             color: #684832;
-            text-align: center;
+            text-align: left;
             text-transform: uppercase;
             margin-bottom: 20px;
           "
         >
           Let's Collaborate
         </p>
+      </div>
+      <div style="padding: 2rem">
+        <button onclick=" return wow()" style="padding: 2rem">Submit</button>
       </div>
 
       <!-- Include Quill library -->
@@ -66,45 +164,7 @@
           placeholder: "Compose an epic...",
         });
 
-        // Define a function to submit data to the server
-        function submitDataToServer() {
-          // Data to be submitted
-          const data = {
-            key1: "value1",
-            key2: "value2",
-            // Add more key-value pairs as needed
-          };
-
-          // Send POST request to server
-          fetch("/endpoint", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          })
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error("Network response was not ok");
-              }
-              return response.json();
-            })
-            .then((data) => {
-              console.log("Data submitted successfully:", data);
-              // Optionally, do something after successful submission
-            })
-            .catch((error) => {
-              console.error("Error submitting data:", error);
-            });
-        }
-
         // Create a button element
-        const button = document.createElement("button");
-        button.textContent = "Submit Data";
-        button.addEventListener("click", submitDataToServer);
-
-        // Append the button to the document body or any other element you desire
-        document.body.appendChild(button);
 
         let timer = null;
 
@@ -146,6 +206,137 @@
             }, 100);
           }
         });
+      </script>
+
+      <script>
+        function addPicture() {
+          document.getElementById("blogPhoto").src =
+            "http://res.cloudinary.com/dalll4udd/image/upload/v1710588884/ipoktcuzeh7iq9eitau6.png";
+          const arr = document.cookie.split(";");
+          var urlEncoded;
+          for (let key of arr) {
+            if (key.split("=")[0] == " add") {
+              urlEncoded = key.split("=")[1];
+
+              console.log(urlEncoded);
+              const k = hi(urlEncoded);
+              document.getElementById("blogPhoto").src = k;
+            }
+          }
+        }
+
+        function hi(k) {
+          const decoded = k;
+          const decodedString = atob(decoded);
+          console.log(decodedString);
+          return decodedString;
+        }
+
+        function findCookie(parameter) {
+          const arr = document.cookie.split(";");
+
+          for (let key of arr) {
+            if (key.split("=")[0] == ` ${parameter}`) {
+              const value = key.split("=")[1];
+
+              return value;
+            }
+          }
+        }
+
+        document
+          .getElementById("fileInput")
+          .addEventListener("change", function () {
+            const fileInput = this;
+            const submitButton = document.querySelector(
+              'button[type="submit"]'
+            );
+
+            if (fileInput.files.length > 0) {
+              submitButton.style.display = "inline-block";
+            } else {
+              submitButton.style.display = "none";
+            }
+          });
+
+        document
+          .getElementById("uploadForm")
+          .addEventListener("submit", function (event) {
+            // Prevent default form submission behavior
+            // Here you can add further validation or submission logic if needed
+            document
+              .getElementById("fileInput")
+              .addEventListener("change", function () {
+                const fileInput = this;
+                const submitButton = document.querySelector(
+                  'button[type="submit"]'
+                );
+              });
+          });
+
+        addPicture();
+        function wow() {
+          const slug = document.getElementById("slug").value;
+          console.log(slugCorrector(slug));
+          document.getElementById("slug").value = slugCorrector(slug);
+          const title = document.getElementById("blog-title").value;
+          const content = document.querySelector(".ql-editor").innerHTML;
+
+          if (findCookie("uploaded") == "yes") {
+            console.log(findCookie("uploaded"));
+            createPost(title, slugCorrector(slug), content);
+            return true;
+          }
+          alert("Upload one pic for your blog");
+          return false;
+        }
+
+        function createPost(title, slug, content) {
+          return new Promise((resolve, reject) => {
+            // Data to be submitted
+            const data = {
+              title: title,
+              slug: slug,
+              content: content,
+            };
+
+            // Send POST request to server
+            fetch("/user/create/post", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            })
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error("Network response was not ok");
+                }
+                return response.json();
+              })
+              .then((responseData) => {
+                console.log("Post created successfully:", responseData);
+
+                resolve(responseData); // Resolve with response data
+                window.location.href = "/user/myaccount";
+
+                // Optionally, you can perform additional tasks here
+              })
+              .catch((error) => {
+                console.error("Error creating post:", error);
+                reject(error); // Reject with error
+              });
+          });
+        }
+
+        function slugCorrector(slug) {
+          return slug
+            .toLowerCase() // Convert the string to lowercase
+            .replace(/[^\w\s-]/g, "") // Remove non-word characters except spaces and hyphens
+            .replace(/\s+/g, "-") // Replace spaces with hyphens
+            .replace(/--+/g, "-") // Replace consecutive hyphens with a single hyphen
+            .trim();
+        }
       </script>
     </body>
   </html>

@@ -1,159 +1,116 @@
-<!DOCTYPE html>
-<html lang="en">
+<div class="container">
+    <!-- Blog Card 1 -->
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Styled Blog Cards</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background-image: url('your-background-image.jpg');
-            /* Change 'your-background-image.jpg' to your actual image path */
-            background-size: cover;
-            background-position: center;
-        }
+    {{#each this.blogs}}
 
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            padding: 20px;
-        }
+    <div class="card">
+        <div class="thumbnail">
+            <img loading="lazy" id="thumbnail" src={{this.blogPhoto}} alt="">
+        </div>
 
-        .card,
-        #editor-choice .card {
-            max-width: 300px;
-            background-color: #fff;
-            border: 2px solid #8B4513;
-            /* Brown border */
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-            margin: 20px;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-        }
 
-        .card:hover,
-        #editor-choice .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .thumbnail img {
-            width: 100%;
-            height: auto;
-            border-bottom: 2px solid #8B4513;
-            /* Brown border */
-        }
-
-        .card-content {
-            padding: 15px;
-        }
-
-        .author img {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-
-        .blog-heading {
-            margin-top: 10px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .card-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
-            padding-top: 10px;
-            border-top: 1px solid #ddd;
-        }
-
-        .like {
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="container">
-        <!-- Blog Card 1 -->
-        {{#each this.blogs}}
-        <div class="card"
-            style="max-width: 300px; background-color: #fff; border: 2px solid #8B4513; border-radius: 10px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); margin: 20px; overflow: hidden; transition: transform 0.3s ease;">
-            <div class="thumbnail" style="border-bottom: 2px solid #8B4513; color:black;">
-                <img loading="lazy" id="thumbnail" src={{this.blogPhoto}} alt="" style="width: 100%; height: auto;">
+        <div class="card-content">
+            <div class="author">
+                <img loading="lazy" src={{this.authorPhoto}}>
+                <span>{{this.author}}</span>
+                <span>{{this.date}}</span>
             </div>
-            <div class="card-content" style="padding: 15px; color:black;">
+
+            <div class="header blog-heading">
+                {{this.title}}
+            </div>
+
+
+
+
+
+
+            <div class="card-footer">
+                <a href={{concate '/views/blog/' this.slug }}
+                    style="color: #007bff; text-decoration: none; display: inline-block;">Read
+                    More </a>
+
+
+                <img src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/like.png" class="like"
+                    onclick="uno()" alt="">
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    {{/each}}
+
+
+</div>
+<div id="editor-choice">
+    <h1 style="padding:20px"> EditorsChoice:</h1>
+    <div
+        style="max-width: 1200px; padding:50px ; margin: 0 auto; display: grid; grid-gap: 20px; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));">
+
+
+        {{#each this.editorChoiceBlogs}}
+        <div class="card">
+            <div class="thumbnail">
+                <img loading="lazy" id="thumbnail" src={{this.blogPhoto}} alt="">
+            </div>
+
+
+            <div class="card-content">
                 <div class="author">
-                    <img loading="lazy" src={{this.authorPhoto}}
-                        style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
-                    <span style="color:black;">{{this.author}}</span>
-                    <span style="color:black;">{{this.date}}</span>
+                    <img loading="lazy" src={{this.authorPhoto}}>
+                    <span>author{{this.author}}</span>
                 </div>
-                <div class="header blog-heading"
-                    style="margin-top: 10px; font-size: 18px; font-weight: bold; color:black;">
-                    {{this.title}}</div>
-                <div class="card-footer"
-                    style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 10px; border-top: 1px solid #ddd;">
-                    <a href={{concate '/views/blog/' this.slug }}
-                        style="color: #007bff; text-decoration: none; display: inline-block;">Read More</a>
-                    <img src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/like.png" class="like"
-                        onclick="uno()" alt="" style="width: 30px; height: 30px; cursor: pointer;">
-                </div>
-            </div>
-        </div>
-        {{/each}}
-    </div>
-    <div id="editor-choice">
-        <h1 style="padding: 20px;">EditorsChoice:</h1>
-        <div
-            style="max-width: 1200px; padding: 50px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-around;">
-            {{#each this.editorChoiceBlogs}}
-            <div class="card"
-                style="max-width: 300px; background-color: #000000; border: 2px solid #8B4513; border-radius: 10px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); margin: 20px; overflow: hidden; transition: transform 0.3s ease;">
-                <div class="thumbnail" style="border-bottom: 2px solid #8B4513;">
-                    <img loading="lazy" id="thumbnail" src={{this.blogPhoto}} alt="" style="width: 100%; height: auto;">
-                </div>
-                <div class="card-content" style="padding: 15px;">
-                    <div class="author">
-                        <img loading="lazy" src={{this.authorPhoto}}
-                            style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
-                        <span>{{this.author}}</span>
-                    </div>
-                    <div class="header blog-heading" style="margin-top: 10px; font-size: 18px; font-weight: bold;">
-                        {{this.title}}</div>
-                    <div class="card-footer"
-                        style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 10px; border-top: 1px solid #ddd;">
-                        <a href={{concate '/views/blog/' this.slug }}
-                            style="color: #007bff; text-decoration: none; display: inline-block;">Read More</a>
-                        <img src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/like.png" class="like"
-                            alt="" style="width: 30px; height: 30px; cursor: pointer;">
-                    </div>
-                </div>
-            </div>
-            {{/each}}
-        </div>
-    </div>
-    <script>
-        function uno() {
-            const elm = event.target;
-            const arr = elm.src.split("/").pop();
-            console.log(arr);
-            if (arr == "like.png") {
-                elm.src = "/files/static/app/raw/kapa65568/server/kpo576455zz545/images/like2.png";
-                return;
-            }
-            elm.src = "/files/static/app/raw/kapa65568/server/kpo576455zz545/images/like.png";
-        }
-    </script>
-</body>
 
-</html>
+                <div class="header blog-heading">
+                    {{this.title}}
+                </div>
+
+
+
+
+
+                <div class="card-footer">
+                    <a href={{concate '/views/blog/' this.slug }}
+                        style="color: #007bff; text-decoration: none; display: inline-block;">Read
+                        More </a>
+
+
+                    <img src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/like.png" class="like"
+                        alt="">
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        {{/each}}
+
+
+    </div>
+</div>
+
+<script>
+
+
+    function uno() {
+
+        const elm = event.target;
+        const arr = elm.src.split("/").pop();
+        console.log(arr);
+        if (arr == "like.png") {
+            elm.src = "/files/static/app/raw/kapa65568/server/kpo576455zz545/images/like2.png";
+            return
+        }
+        elm.src = "/files/static/app/raw/kapa65568/server/kpo576455zz545/images/like.png";
+
+
+
+    }
+</script>

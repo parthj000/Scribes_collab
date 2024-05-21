@@ -189,9 +189,7 @@ router.get("/user/create", checkCookie, (req, res) => {
   if (req.renderCode == 1) {
     console.log("----------------------------------------", req.message);
 
-    return res.render("create", {
-      layout: "active",
-    });
+    return res.sendFile(path.resolve("views/static/coll.html"));
   }
   console.log("-----------------------------", req.message);
 });
@@ -204,9 +202,7 @@ router.post(
     if (req.renderCode == 1) {
       console.log("----------------------------------------", req.message);
       res.clearCookie("uploaded");
-      return res.render("home", {
-        layout: "active",
-      });
+      return res.json({ nice: "true" });
     }
     console.log("-----------------------------", req.message);
 
@@ -300,6 +296,7 @@ router.post("/bookmark", checkCookie, decodeToken, (req, res) => {
 
   res.json({
     this: "nief",
+    res: window.location.href("/"),
   });
 });
 
@@ -321,7 +318,9 @@ router.get("/co", checkCookie, (req, res) => {
     return res.render("error");
   }
 
-  res.render("collaborate");
+  return res.render("collaborate", {
+    layout: "active",
+  });
 });
 
 router.post("/room", checkCookie, decodeToken, (req, res) => {
@@ -344,7 +343,7 @@ router.post("/room", checkCookie, decodeToken, (req, res) => {
 router.get("/room/:roomid", (req, res) => {
   const uuid = req.params.roomid;
 
-  res.sendFile(path.resolve("views/static/coll.html"));
+  res.sendFile(path.resolve("views/static/coll2.html"));
 });
 
 export { router };

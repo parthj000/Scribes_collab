@@ -7,6 +7,7 @@ const commentinfo = async (req, res) => {
     author: req.body.author,
   });
   //this will find the blog
+
   const comments = blog.comments;
   comments.push({
     author: req.body.commentAuthor,
