@@ -6,7 +6,7 @@ import { Server } from "socket.io";
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
-  cors: "http://localhost:3000",
+  cors: [],
 });
 
 // Serve static files from the 'public' directory
@@ -15,10 +15,19 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   console.log("New client connected", socket.id);
 
+
+  socket.on("join-room",(roomId)=>{
+    console.log("room id se join ho gya che")
+    socket.join(roomId);
+  })
+
+  
+
   // Listen for changes in the editor content and broadcast them to all clients except the sender
-  socket.on("editor-changes", (content) => {
+  socket.on("editor-changes", (content,room) => {
     // Exclude the sender's socket ID when broadcasting changes
-    socket.broadcast.emit("editor-changes", content);
+    console.log(content,room);
+    socket.to(room).emit("editor-changes", content);
   });
 
   // Handle disconnection

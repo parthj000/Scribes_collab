@@ -33,6 +33,17 @@
             transition: transform 0.3s ease-in-out;
             /* Smooth transition */
         }
+        button{
+            transition: 0.15s;
+            
+        }
+        button:hover{
+            cursor: pointer;
+            background-color: rgb(176, 176, 176);
+            color:white;
+            
+            
+        }
 
         .box:hover {
             transform: scale(1.05);
@@ -54,7 +65,7 @@
 <body>
     <div class="container">
         <div class="box">
-            <h2>Enter Room ID</h2>
+            <h2>JOIN ROOM</h2>
 
             <button id="join" onclick="click()"
                 style="background-color: #4CAF50; color: white; cursor: pointer;">Join</button><br>
@@ -62,10 +73,10 @@
         </div>
         <div id="collaboratorsSection" class="box">
             <h2>Add Collaborators</h2>
-            <input type="email" style="color:black;" id="one" placeholder="Enter Gmail ID"><br>
-            <input type="email" style="color:black;" id="two" placeholder="Enter Gmail ID"><br>
-            <input type="email" style="color:black;" id="three" placeholder="Enter Gmail ID"><br>
-            <button onclick="makeReq()">Submit</button>
+            <input type="email" required="true" style="color:black;" id="one" placeholder="Enter Gmail ID"><br>
+            <input type="email" required="true" style="color:black;" id="two" placeholder="Enter Gmail ID"><br>
+            <input type="email" required="true" style="color:black;" id="three" placeholder="Enter Gmail ID"><br>
+            <button onclick="makeReq()" style="color:black;">Submit</button>
         </div>
     </div>
 
@@ -86,7 +97,14 @@
                 document.getElementById("one").value,
                 document.getElementById("two").value,
                 document.getElementById("three").value
-            ]
+            ];
+
+            
+        console.log(arr);
+            if(!arr[0]&&!arr[1]&&!arr[2]){
+                alert("At least one email is required.");
+                return;
+            }
 
             const postData = {
                 gmail: arr
@@ -100,7 +118,14 @@
                 body: JSON.stringify(postData)
             });
 
-            url = await resp.json().url;
+            let data = await resp.json();
+
+            const roomId = data.url.split("/").pop();
+
+            alert("Email has been sent!");
+            window.location.pathname = `/user/create/${roomId}`;
+            
+
 
 
 

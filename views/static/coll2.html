@@ -50,6 +50,11 @@
       <script>
         // Initialize socket connection
         const socket = io("http://localhost:5500");
+        const url = window.location.href;
+        const roomId = url.split("/").pop();
+
+        socket.emit("join-room", roomId);
+
 
         // Initialize Quill editor
         let quill = new Quill("#editor", {
@@ -83,7 +88,7 @@
               let content = quill.root.innerHTML;
 
               // Emit the updated content to the server
-              socket.emit("editor-changes", content);
+              socket.emit("editor-changes", content,roomId);
             }, 1000); // 1 second delay
           }
         });
@@ -105,7 +110,7 @@
                   clearTimeout(timer);
                   timer = setTimeout(() => {
                     let newContent = quill.root.innerHTML;
-                    socket.emit("editor-changes", newContent);
+                    socket.emit("editor-changes", newContent,roomId);
                   }, 1000); // 1 second delay
                 }
               });

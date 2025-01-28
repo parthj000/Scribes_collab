@@ -193,6 +193,18 @@ router.get("/user/create", checkCookie, (req, res) => {
   }
   console.log("-----------------------------", req.message);
 });
+
+router.get("/user/create/:roomId", checkCookie, (req, res) => {
+  
+  if (req.renderCode == 1) {
+    console.log("----------------------------------------", req.message);
+
+    return res.sendFile(path.resolve("views/static/coll3.html"));
+  }
+  console.log("-----------------------------", req.message);
+});
+
+
 router.post(
   "/user/create/post",
   checkCookie,
