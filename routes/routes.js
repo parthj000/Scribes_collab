@@ -280,7 +280,7 @@ router.post("/comment", (req, res) => {
   commentinfo(req, res);
 
   console.log(req.body);
-  res.send("hiii");
+  res.json({message:"Commented succesfully."});
 });
 
 router.get("/view/user/:slug", generalUser, (req, res) => {
@@ -307,8 +307,7 @@ router.post("/bookmark", checkCookie, decodeToken, (req, res) => {
   bookmark(req, res);
 
   res.json({
-    this: "nief",
-    res: window.location.href("/"),
+    message:"Bookmarked this blog."
   });
 });
 

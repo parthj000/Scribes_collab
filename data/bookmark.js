@@ -6,6 +6,11 @@ async function bookmark(req, res) {
     author: req.body.author,
   });
   const user = await kap(req);
+  for(let key of user.bookmark){
+    if(key===blog.Id){
+      return;
+    }
+  }
   await user.bookmark.push(blog.Id);
   await user.save();
   console.log(user, "user");
