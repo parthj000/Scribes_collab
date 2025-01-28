@@ -1,3 +1,2 @@
-# 🚀 Scribes
-A real time collaborative blogging platform.
-
+# Scribes_collab
+Scribes a collabrating website 
