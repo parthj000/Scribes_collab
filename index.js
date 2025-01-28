@@ -84,7 +84,4 @@ app.use((req, res, next) => {
 
 app.listen(3000, () => console.log("app running "));
 
-
-export default (req, res) => {
-  app(req, res);
-};
+export default app;
