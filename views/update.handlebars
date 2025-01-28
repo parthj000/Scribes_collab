@@ -1,0 +1,104 @@
+<div style="margin-bottom: 20px">
+    <div style="margin-bottom: 3px">
+        <div style="margin-bottom: 3px; ">
+            <textarea name="title" id="newTitle" cols="1" rows="1"
+                style=" width:100%;background-color:rgb(56, 55, 55);padding: 5px; font-size: 40px; 
+                            font-family: 'Georgia', sans-serif;border:none;outline:none;font-weight:300;">{{this.title}}</textarea>
+        </div>
+    </div>
+    <!-- Create a container for Quill editor -->
+    <div id="ni">{{this.content}}</div>
+    <div id="editor" style="
+          height: 500px;
+          background-color:inherit;
+          border: 2px solid black;
+          
+          padding: 20px;
+          border-radius: 10px;
+        ">
+
+    </div>
+
+    <button
+        style="color:white; background-color:rgb(136, 136, 241); border:none; border-radius:5px; padding:1rem; align-text:center;"
+        onclick="userAction()">Submit</button>
+
+    <!-- Include Quill library -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <!-- Include Socket.io library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.5/socket.io.js"></script>
+    <!-- Include client-side JavaScript -->
+    <script>
+        // Initialize socket connection
+
+        // Initialize Quill editor
+        let quill = new Quill("#editor", {
+            modules: {
+                toolbar: [
+                    ["bold", "italic", "underline", "strike"],
+                    [{ list: "ordered" }, { list: "bullet" }],
+                    [{ script: "sub" }, { script: "super" }],
+                    [{ indent: "-1" }, { indent: "+1" }],
+                    ["link", "image", "video"],
+                    ["clean"],
+                ],
+            },
+            theme: "snow",
+            placeholder: "Compose an epic...",
+        });
+    </script>
+    <script>
+        const parent = document.querySelector(".ql-toolbar");
+        const children = parent.querySelectorAll('button');
+        const children2 = parent.querySelectorAll('svg');
+
+
+        for (let key of children) {
+            key.style.padding = "0.5rem 2rem";
+            key.style.backgroundColor = "inherit";
+
+        }
+        for (let key of children2) {
+            key.style.width = "12px";
+
+
+
+
+
+        }
+
+        document.querySelector(".ql-editor").style.color = "black !important";
+        document.querySelector(".ql-editor").innerHTML = document.querySelector("#ni").innerText;
+        document.querySelector("#ni").style.display = "none";
+        document.querySelector(".ql-tooltip").style.display = "none";
+        document.querySelector(".ql-clipboard").style.display = "none";
+
+        async function userAction() {
+            const url = window.location.href;
+            const action = url.split("/")[4];
+            const slug = url.split("/")[6];
+
+            console.log(action);
+            const newTitle = document.getElementById("newTitle").value;
+            const newContent = document.querySelector(".ql-editor").innerHTML;
+            console.log(newContent);
+            const data = {
+                newTitle: newTitle,
+                newContent: newContent,
+                action: action,
+            };
+            console.log(data);
+
+            const response = await fetch(`/user/${action}/blog/${slug}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            })
+                .then(alert("The blog have been updated")).then(window.location.href = "/");
+
+
+            console.log(response.json());
+        }
+    </script>

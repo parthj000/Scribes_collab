@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scribes</title>
+  <link id="link1" rel="stylesheet" href="/files/static/app/raw/kapa65568/server/kpo576455zz545/main.css">
+  <link id="link2" rel="stylesheet" href="/files/static/app/raw/kapa65568/server/kpo576455zz545/nav.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+
+  <div class=" container-nav">
+    <div class="logo">Scr<span>ibes</span></div>
+
+
+    <ul class="nav-list" style="list-style: none; padding: 0;">
+
+      <li><a href="/" style="text-decoration: none; color: #fff;">Home</a>
+      </li>
+
+      <li><a href="/blog" style="text-decoration: none; color: #fff;">Blog</a></li>
+      <li><a href="/user/myaccount" style="text-decoration: none; color: #fff;">MyAccount</a></li>
+      <li><a href="/co" style="text-decoration: none; color: #fff;">Collab</a></li>
+      <li><a href="/show/bookmark" style="text-decoration: none; color: #fff;">bookmark</a></li>
+
+      <li><button class="logout" onclick="logout()">Logout</button></li>
+      <li><button class="logout" onclick="create()">Create</button></li>
+
+
+
+
+
+    </ul>
+    <div class="nav-menu" id="nav-menu" onclick="responsive()">
+      <img class="" src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/menu.png" alt="">
+
+    </div>
+
+
+
+
+
+  </div>
+  <div id="responsive-menu">
+    <ul class="responsive-menu">
+      <li><a href="/" style="text-decoration: none; color: #fff;">Home</a>
+      </li>
+
+      <li><a href="/blog" style="text-decoration: none; color: #fff;">Blog</a></li>
+      <li><a href="/user/myaccount" style="text-decoration: none; color: #fff;">MyAccount</a></li>
+      <li><a href="/co" style="text-decoration: none; color: #fff;">Collab</a></li>
+      <li><a href="/show/bookmark" style="text-decoration: none; color: #fff;">bookmark</a></li>
+      <li><button class="logout" onclick="logout()">Logout</button></li>
+      <li><button class="logout" onclick="create()">Create</button></li>
+
+
+    </ul>
+  </div>
+
+
+  {{{body}}}
+  <footer>
+    <div class="main-footer">
+
+      <div class="main-footer-box">
+        <ul>
+          <li>ParthJoshi</li>
+          <li>myblogs.com@2024</li>
+        </ul>
+      </div>
+      <div class="main-footer-box">
+        <ul style="font-size:1.75rem; ">
+          <li>
+            <a style="text-decoration:none;" target="_blank" href="https://github.com/parthj000"
+              class="fa fa-github"></a>
+
+          </li>
+          <li>
+            <a style="text-decoration:none;" target="_blank" href="https://www.linkedin.com/in/parth-joshi-a65a62286/"
+              class="fa fa-linkedin"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </footer>
+
+</body>
+<script>
+
+  //responsive menu handling 
+
+
+  function responsive() {
+
+    const elem = document.getElementById("responsive-menu");
+
+    if (elem.style.display == "block") {
+      elem.style.display = "none";
+      return
+    }
+
+    elem.style.display = "block";
+  }
+
+  var x = window.matchMedia("(max-width: 850px)")
+  x.addEventListener("change", function () {
+    document.getElementById("responsive-menu").style.display = "none";
+  });
+
+
+
+
+  async function logout() {
+    const data = {
+      action: "logout"
+    }
+
+    const response = await fetch("/user/myaccount/logout", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+    console.log(response);
+    window.location.href = "/"
+
+
+
+
+  }
+
+  function create() {
+    window.location.href = "/user/create";
+  }
+  function collab() {
+    window.location.href = "/co";
+
+  }
+
+
+
+</script>
+
+</html>

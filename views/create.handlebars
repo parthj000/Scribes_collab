@@ -1,0 +1,168 @@
+<div id="n"
+    style="over-flow:hidden;   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; margin-right: 10%;margin-left: 10%; background-color: #ffffff; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+    <img id="blogPhoto" src="" alt=""
+        style="width:100%; height:20rem;  object-fit:cover; object-position:center; border:none; ">
+
+    <form id="uploadForm" action="/uploads/blogs" method="post" enctype="multipart/form-data"
+        style="text-align: center;background-color:rgb(56, 53, 53); padding-top:1rem; margin-top:-5px;">
+        <label for="fileInput"
+            style="cursor: pointer; padding: 10px 20px; background-color: #007bff; color: #fff; border-radius: 5px; border: none; display: inline-block; margin-bottom: 10px;">Choose
+            File</label>
+        <input type="file" id="fileInput" name="file" style="display: none;">
+        <button type="submit"
+            style="padding: 10px 20px; background-color: #007bff; color: #fff; border-radius: 5px; border: none; display: none;">Submit</button>
+    </form>
+    <form action="/user/create/post" onsubmit="return wow()" method="post">
+        <div style="padding:50px; background-color:rgb(56, 53, 53);">
+            <div style="margin-bottom: 3px;">
+                <input type="text" name="title" required placeholder="Title"
+                    style=" width:100%;padding: 5px; font-size: 40px; 
+                    font-family: 'Georgia', sans-serif;border:none;outline:none;font-weight:300; background-color:rgb(56, 53, 53);">
+            </div>
+            <div style="margin-bottom: 10px;">
+                <input type="text" name="slug" id="slug" required
+                    placeholder="please choose description wisely this will help your story to reach as far as possible."
+                    style=" background-color:rgb(56, 53, 53); width:100%; padding: 10px; font-size: 13px; font-family: 'Arial', sans-serif;border:none;outline:none; font-style:italic">
+            </div>
+            <div style="margin-bottom: 20px;">
+                <textarea name="content" required placeholder="Enter your story..." style="background-color:rgb(56, 53, 53);
+                 width:100%; padding: 10px; font-size: 16px; border:none;font-size:20px;
+                    font-family: 'Arial', sans-serif;outline:none;" cols="30" rows="10"></textarea>
+            </div>
+            <div style="text-align: center;">
+                <input type="submit" id="finalsubmit" value="Submit"
+                    style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+            </div>
+
+
+
+        </div>
+
+    </form>
+
+
+
+</div>
+
+
+
+<script>
+    function addPicture() {
+
+
+
+
+        document.getElementById("blogPhoto").src = "http://res.cloudinary.com/dalll4udd/image/upload/v1710588884/ipoktcuzeh7iq9eitau6.png";
+        const arr = (document.cookie).split(";");
+        var urlEncoded;
+        for (let key of arr) {
+
+            if (key.split("=")[0] == " add") {
+                urlEncoded = key.split("=")[1];
+
+
+                console.log(urlEncoded);
+                const k = hi(urlEncoded);
+                document.getElementById("blogPhoto").src = k;
+
+
+            }
+
+        }
+
+
+
+    }
+
+    function hi(k) {
+        const decoded = k;
+        const decodedString = atob(decoded);
+        console.log(decodedString);
+        return decodedString;
+
+
+    }
+
+
+
+
+    function findCookie(parameter) {
+        const arr = (document.cookie).split(";");
+
+        for (let key of arr) {
+
+            if (key.split("=")[0] == ` ${parameter}`) {
+                const value = key.split("=")[1];
+
+                return value;
+
+
+
+            }
+
+        }
+
+    }
+
+
+
+    document.getElementById('fileInput').addEventListener('change', function () {
+        const fileInput = this;
+        const submitButton = document.querySelector('button[type="submit"]');
+
+        if (fileInput.files.length > 0) {
+            submitButton.style.display = 'inline-block';
+        } else {
+            submitButton.style.display = 'none';
+        }
+    });
+
+    document.getElementById('uploadForm').addEventListener('submit', function (event) {
+        // Prevent default form submission behavior
+        // Here you can add further validation or submission logic if needed
+        document.getElementById('fileInput').addEventListener('change', function () {
+            const fileInput = this;
+            const submitButton = document.querySelector('button[type="submit"]');
+
+
+        });
+
+
+
+    });
+
+
+
+
+    addPicture();
+    function wow() {
+        const slug = (document.getElementById("slug").value);
+        console.log(slugCorrector(slug));
+        document.getElementById("slug").value = slugCorrector(slug);
+
+
+
+        if (findCookie("uploaded") == "yes") {
+            console.log(findCookie("uploaded"))
+            return true;
+        }
+        alert("Upload one pic for your blog");
+        return false;
+
+    }
+
+    function slugCorrector(slug) {
+        return slug
+            .toLowerCase()                           // Convert the string to lowercase
+            .replace(/[^\w\s-]/g, '')               // Remove non-word characters except spaces and hyphens
+            .replace(/\s+/g, '-')                   // Replace spaces with hyphens
+            .replace(/--+/g, '-')                   // Replace consecutive hyphens with a single hyphen
+            .trim();
+    }
+
+
+
+
+
+
+</script>

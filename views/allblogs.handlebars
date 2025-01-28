@@ -1,0 +1,120 @@
+<div class="container">
+    <!-- Blog Card 1 -->
+
+    {{#each this.blogs}}
+
+    <div class="card">
+        <div class="thumbnail">
+            <img loading="lazy" id="thumbnail" src={{this.blogPhoto}} alt="">
+        </div>
+
+
+        <div class="card-content">
+            <div class="author">
+                <img loading="lazy" src={{this.authorPhoto}}>
+                <span>{{this.author}}</span>
+                <span>{{this.date}}</span>
+            </div>
+
+            <div class="header blog-heading">
+                {{this.title}}
+            </div>
+
+
+
+
+
+
+            <div class="card-footer">
+                <a href={{concate '/views/blog/' this.slug }}
+                    style="color: #007bff; text-decoration: none; display: inline-block;">Read
+                    More </a>
+
+
+                <img src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/like.png" class="like"
+                    onclick="uno()" alt="">
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    {{/each}}
+
+
+</div>
+<div id="editor-choice">
+    <h1 style="padding:20px"> EditorsChoice:</h1>
+    <div
+        style="max-width: 1200px; padding:50px ; margin: 0 auto; display: grid; grid-gap: 20px; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));">
+
+
+        {{#each this.editorChoiceBlogs}}
+        <div class="card">
+            <div class="thumbnail">
+                <img loading="lazy" id="thumbnail" src={{this.blogPhoto}} alt="">
+            </div>
+
+
+            <div class="card-content">
+                <div class="author">
+                    <img loading="lazy" src={{this.authorPhoto}}>
+                    <span>author{{this.author}}</span>
+                </div>
+
+                <div class="header blog-heading">
+                    {{this.title}}
+                </div>
+
+
+
+
+
+                <div class="card-footer">
+                    <a href={{concate '/views/blog/' this.slug }}
+                        style="color: #007bff; text-decoration: none; display: inline-block;">Read
+                        More </a>
+
+
+                    <img src="/files/static/app/raw/kapa65568/server/kpo576455zz545/images/like.png" class="like"
+                        alt="">
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        {{/each}}
+
+
+    </div>
+</div>
+
+<script>
+
+    if(window.location.href.split("/").pop()==="bookmark"){
+        document.getElementById("editor-choice").style.display = "none";
+    }
+
+
+    function uno() {
+
+        const elm = event.target;
+        const arr = elm.src.split("/").pop();
+        console.log(arr);
+        if (arr == "like.png") {
+            elm.src = "/files/static/app/raw/kapa65568/server/kpo576455zz545/images/like2.png";
+            return
+        }
+        elm.src = "/files/static/app/raw/kapa65568/server/kpo576455zz545/images/like.png";
+
+
+
+    }
+</script>
