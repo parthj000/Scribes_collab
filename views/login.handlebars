@@ -1,14 +1,14 @@
 <div
-  style="max-width: 400px; color:black; margin: 20px auto; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); background-color: #000000; margin-bottom:5rem; margin-top:5rem;">
+  style="max-width: 400px; color:black; margin: 20px auto; padding: 20px; border-radius: 8px; box-shadow: 2px 5px 25px rgba(0, 0, 0, 0.2); background-color:transparent; margin-bottom:5rem; margin-top:5rem; filter:blur(2)">
 
-  <form action="/auth" method="post" style="display: flex; background-color:black; flex-direction: column;">
-
+  <form action="/auth" method="post" style="display: flex; background-color:transparent; flex-direction: column;">
+<h1>Login</h1>
     <input name="name" required="true" type="text"
-      style="padding: 10px; background-color:black; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc; transition: border-color 0.3s ease-in-out;"
+      style="padding: 10px; background-color:transparent; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc; transition: border-color 0.3s ease-in-out;"
       placeholder="Your Name">
 
     <input name="password" required="true" type="password"
-      style="padding: 10px; background-color:black; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc; transition: border-color 0.3s ease-in-out;"
+      style="padding: 10px; background-color:transparent; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc; transition: border-color 0.3s ease-in-out;"
       placeholder="Your Password">
 
 
@@ -19,6 +19,6 @@
 
   </form>
 
-  <p>if you haven't registered please<a href="/register" style="color:blue">Register here</a></p>
+  <p style="padding-top:1rem">if you haven't registered please <a href="/register" style="color:rgb(85, 85, 255)">Register here</a></p>
   <p style="color:red">{{this.errMessage}}</p>
 </div>

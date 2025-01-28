@@ -7,9 +7,11 @@
     color:white;
     font-family: "Poppins", sans-serif;
     
+    
 }
 body{
   background-color: rgb(49, 46, 46);
+  overflow-x: hidden;
 }
 :root{
   --dark-color:rgb(61, 58, 58);
@@ -100,6 +102,7 @@ body{
     gap: 0.5rem;
     padding: 2rem;
     background-color: var(--dark-2);
+    
     
     grid-template-columns:repeat(auto-fit,minmax(350px,0.9fr)) ;
 }
