@@ -343,9 +343,11 @@ router.post("/room", checkCookie, decodeToken, (req, res) => {
   console.log(gmail);
   var url = uuidv4();
 
-  const newurl = `http://localhost:3000/room/` + url;
+  const newurl = `https://scribes-collab.onrender.com/room/` + url;
 
-  sendGmail(gmail, newurl);
+  // console.log();
+  // return;
+  sendGmail(gmail, newurl, req.decodedData.name);
   console.log(newurl);
 
   return res.json({ status: "success", url: newurl });
